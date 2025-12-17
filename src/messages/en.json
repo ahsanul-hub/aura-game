@@ -1,0 +1,72 @@
+{
+    "Navigation": {
+        "home": "Home",
+        "games": "Browse Games",
+        "cart": "Shopping Cart",
+        "login": "Login",
+        "promo": "Promo"
+    },
+    "Home": {
+        "heroTitle": "Level Up Your Gaming",
+        "heroSubtitle": "Get the best games at the best prices. Thousands of games waiting to be played!",
+        "browseGames": "Browse Games",
+        "viewPromo": "View Promo",
+        "specialPromo": "Special Promo This Month",
+        "trending": "Trending",
+        "popularGames": "Popular Games",
+        "viewAll": "View All",
+        "buy": "Buy"
+    },
+    "Footer": {
+        "about": "Trusted platform to buy digital games with best prices and instant delivery.",
+        "links": "Quick Links",
+        "contact": "Contact Us",
+        "rights": "All rights reserved."
+    },
+    "Cart": {
+        "title": "Shopping Cart",
+        "empty": "Your cart is empty",
+        "checkout": "Checkout",
+        "total": "Total",
+        "subtotal": "Subtotal",
+        "tax": "Tax (10%)",
+        "continue": "Continue Shopping",
+        "items": "{count} items in cart"
+    },
+    "Games": {
+        "title": "Game Catalog",
+        "searchPlaceholder": "Search your favorite game...",
+        "allCategories": "All Categories",
+        "sortBy": "Sort By",
+        "priceAsc": "Price: Low to High",
+        "priceDesc": "Price: High to Low",
+        "resetFilter": "Reset Filter",
+        "detail": "Detail"
+    },
+    "GameDetail": {
+        "back": "Back",
+        "description": "Description",
+        "systemSpecs": "System Specifications",
+        "minimum": "Minimum",
+        "recommended": "Recommended",
+        "addToCart": "Add to Cart",
+        "buyNow": "Buy Now",
+        "relatedGames": "Related Games"
+    },
+    "Payment": {
+        "title": "Payment Checkout",
+        "orderDetail": "OrderDetail",
+        "totalPayment": "Total Payment",
+        "paymentMethod": "Payment Method",
+        "buyerInfo": "Buyer Information",
+        "fullName": "Full Name",
+        "email": "Email",
+        "payNow": "Pay Now",
+        "processing": "Processing...",
+        "backToCart": "Back to Cart"
+    },
+    "Common": {
+        "loading": "Loading...",
+        "error": "Something went wrong"
+    }
+}
