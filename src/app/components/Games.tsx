@@ -43,7 +43,7 @@ export function Games() {
       {/* Search and Filters */}
       <div className="max-w-7xl mx-auto mb-12 space-y-6">
         <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-600">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-600">
             {t("title")}
           </h1>
           <div className="relative w-full md:w-96 group">
