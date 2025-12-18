@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { api } from '../../api/axios'
-import { CategoryResponse } from '../types/Category'
+import { api } from '../api/axios'
+import { GetCategoryResponse } from '../types/Category'
 
 export function useGetCategory() {
-  const { data, isLoading } = useQuery<CategoryResponse>({
+  const { data, isLoading } = useQuery<GetCategoryResponse>({
     queryKey: ['get-category'],
     queryFn: async () => {
       const res = await api.get('/categories')

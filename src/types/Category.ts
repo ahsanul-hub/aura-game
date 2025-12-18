@@ -1,3 +1,5 @@
+import { ApiResponse } from './Global'
+
 export interface Category {
   id: string
   name: string
@@ -10,8 +12,4 @@ export interface Category {
   updated_at: string
 }
 
-export interface CategoryResponse {
-  message: string
-  status: string
-  data: Category[]
-}
+export type GetCategoryResponse = ApiResponse<Category[]>
