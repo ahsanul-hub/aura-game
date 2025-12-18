@@ -1,42 +1,33 @@
-"use client";
+'use client'
 
-import { Link } from "../../i18n/routing";
-import { Search, Filter, SlidersHorizontal, Star } from "lucide-react";
-import { useState } from "react";
-import { gamesData } from "../data/gamesData";
-import { useCart } from "../context/CartContext";
-import { useTranslations } from "next-intl";
+import { Link } from '../../i18n/routing'
+import { Search, Filter, SlidersHorizontal, Star } from 'lucide-react'
+import { useState } from 'react'
+import { gamesData } from '../data/gamesData'
+import { useTranslations } from 'next-intl'
+import { useGetCategory } from '../hooks/Category'
 
 export function Games() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [sortBy, setSortBy] = useState("featured");
-  const { addToCart } = useCart();
-  const t = useTranslations("Games");
-
-  const categories = [
-    "All",
-    "Action",
-    "RPG",
-    "Adventure",
-    "Strategy",
-    "Racing",
-  ];
+  const [searchTerm, setSearchTerm] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [sortBy, setSortBy] = useState('featured')
+  const t = useTranslations('Games')
+  const categories = ['All', 'Action', 'RPG', 'Adventure', 'Strategy', 'Racing']
+  
+  // Get Category Hooks
+  const { data } = useGetCategory()
 
   const filteredGames = gamesData
     .filter((game) => {
-      const matchesSearch = game.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      const matchesCategory =
-        selectedCategory === "All" || game.category === selectedCategory;
-      return matchesSearch && matchesCategory;
+      const matchesSearch = game.title.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesCategory = selectedCategory === 'All' || game.category === selectedCategory
+      return matchesSearch && matchesCategory
     })
     .sort((a, b) => {
-      if (sortBy === "price-asc") return a.price - b.price;
-      if (sortBy === "price-desc") return b.price - a.price;
-      return b.rating - a.rating;
-    });
+      if (sortBy === 'price-asc') return a.price - b.price
+      if (sortBy === 'price-desc') return b.price - a.price
+      return b.rating - a.rating
+    })
 
   return (
     <div className="min-h-screen pt-20 pb-12 px-4 sm:px-6 lg:px-8">
@@ -44,13 +35,13 @@ export function Games() {
       <div className="max-w-7xl mx-auto mb-12 space-y-6">
         <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-600">
-            {t("title")}
+            {t('title')}
           </h1>
           <div className="relative w-full md:w-96 group">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 group-focus-within:text-purple-600 dark:group-focus-within:text-purple-500 transition-colors" />
             <input
               type="text"
-              placeholder={t("searchPlaceholder")}
+              placeholder={t('searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full bg-gray-100 dark:bg-black/40 border border-purple-200 dark:border-purple-500/20 rounded-full py-3 pl-10 pr-4 text-gray-900 dark:text-white focus:outline-none focus:border-purple-500 transition-all placeholder-gray-500"
@@ -67,10 +58,11 @@ export function Games() {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-full whitespace-nowrap transition-all text-sm ${
                   selectedCategory === category
-                    ? "bg-purple-600 dark:bg-purple-600 text-white shadow-lg shadow-purple-500/25"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/5"
-                }`}>
-                {category === "All" ? t("allCategories") : category}
+                    ? 'bg-purple-600 dark:bg-purple-600 text-white shadow-lg shadow-purple-500/25'
+                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/5'
+                }`}
+              >
+                {category === 'All' ? t('allCategories') : category}
               </button>
             ))}
           </div>
@@ -80,10 +72,11 @@ export function Games() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-gray-100 dark:bg-black/40 border border-purple-200 dark:border-purple-500/20 rounded-lg py-2 px-4 text-gray-900 dark:text-white focus:outline-none focus:border-purple-500 text-sm w-full md:w-auto cursor-pointer hover:bg-gray-200 dark:hover:bg-black/60 transition-colors">
-              <option value="featured">{t("sortBy")}</option>
-              <option value="price-asc">{t("priceAsc")}</option>
-              <option value="price-desc">{t("priceDesc")}</option>
+              className="bg-gray-100 dark:bg-black/40 border border-purple-200 dark:border-purple-500/20 rounded-lg py-2 px-4 text-gray-900 dark:text-white focus:outline-none focus:border-purple-500 text-sm w-full md:w-auto cursor-pointer hover:bg-gray-200 dark:hover:bg-black/60 transition-colors"
+            >
+              <option value="featured">{t('sortBy')}</option>
+              <option value="price-asc">{t('priceAsc')}</option>
+              <option value="price-desc">{t('priceDesc')}</option>
             </select>
           </div>
         </div>
@@ -98,7 +91,8 @@ export function Games() {
             className="group relative bg-white dark:bg-slate-800/50 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 border border-gray-200 dark:border-white/5 hover:border-purple-400 dark:hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/20"
             style={{
               animationDelay: `${index * 50}ms`,
-            }}>
+            }}
+          >
             <div className="aspect-[16/9] overflow-hidden relative">
               <img
                 src={game.image}
@@ -146,7 +140,7 @@ export function Games() {
                   )}
                 </div>
                 <button className="bg-gray-200 dark:bg-white/10 hover:bg-purple-600 text-gray-900 dark:text-white px-4 py-2 rounded-lg text-sm transition-colors opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0">
-                  {t("detail")}
+                  {t('detail')}
                 </button>
               </div>
             </div>
@@ -154,5 +148,5 @@ export function Games() {
         ))}
       </div>
     </div>
-  );
+  )
 }

@@ -29,16 +29,6 @@ export function GameDetail() {
     )
   }
 
-  const handleAddToCart = () => {
-    addToCart(game)
-    toast.success(`${game.title} ditambahkan ke cart!`)
-  }
-
-  const handleBuyNow = () => {
-    addToCart(game)
-    router.push('/cart')
-  }
-
   return (
     <div className="min-h-screen pt-20 pb-12">
       {/* Hero Banner */}
@@ -101,18 +91,9 @@ export function GameDetail() {
                 </div>
 
                 <div className="flex gap-3">
-                  <button
-                    onClick={handleBuyNow}
-                    className="flex-1 bg-white cursor-pointer text-black font-bold px-6 py-3 rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
-                  >
+                  <button className="flex-1 bg-white cursor-pointer text-black font-bold px-6 py-3 rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
                     <Zap className="w-5 h-5" />
                     {t('buyNow')}
-                  </button>
-                  <button
-                    onClick={handleAddToCart}
-                    className="bg-purple-600 hover:bg-purple-700  cursor-pointer text-white p-3 rounded-xl transition-colors"
-                  >
-                    <ShoppingCart className="w-6 h-6" />
                   </button>
                   <button className="bg-white/10 hover:bg-white/20  cursor-pointer text-white p-3 rounded-xl transition-colors">
                     <Heart className="w-6 h-6" />
@@ -152,62 +133,6 @@ export function GameDetail() {
                       Master unique abilities and powerful weapons
                     </p>
                   </div>
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-6">{t('systemSpecs')}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-slate-800/50 p-6 rounded-xl border border-white/5">
-                  <h3 className="text-purple-400 font-bold mb-4">{t('minimum')}</h3>
-                  <ul className="space-y-3 text-sm text-gray-300">
-                    <li className="flex justify-between">
-                      <span className="text-gray-500">OS</span>
-                      <span>Windows 10 64-bit</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-500">Processor</span>
-                      <span>Intel Core i5-4460</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-500">Memory</span>
-                      <span>8 GB RAM</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-500">Graphics</span>
-                      <span>GTX 960 4GB</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-500">Storage</span>
-                      <span>50 GB available</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="bg-slate-800/50 p-6 rounded-xl border border-white/5">
-                  <h3 className="text-purple-400 font-bold mb-4">{t('recommended')}</h3>
-                  <ul className="space-y-3 text-sm text-gray-300">
-                    <li className="flex justify-between">
-                      <span className="text-gray-500">OS</span>
-                      <span>Windows 10/11 64-bit</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-500">Processor</span>
-                      <span>Intel Core i7-8700K</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-500">Memory</span>
-                      <span>16 GB RAM</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-500">Graphics</span>
-                      <span>RTX 2070 8GB</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-500">Storage</span>
-                      <span>SSD 50 GB available</span>
-                    </li>
-                  </ul>
                 </div>
               </div>
             </section>

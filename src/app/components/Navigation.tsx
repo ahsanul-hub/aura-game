@@ -52,17 +52,6 @@ export function Navigation() {
               <LanguageSwitcher />
               <ThemeToggle />
 
-              <Link
-                href="/cart"
-                className="relative p-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-              >
-                <ShoppingCart className="w-6 h-6" />
-                {getTotalItems() > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full animate-bounce">
-                    {getTotalItems()}
-                  </span>
-                )}
-              </Link>
               <button className="bg-purple-600 cursor-pointer hover:bg-purple-700 dark:bg-purple-600 dark:hover:bg-purple-700 text-white px-6 py-2 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25">
                 {t('login')}
               </button>
