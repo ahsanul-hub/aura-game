@@ -5,7 +5,6 @@ import { routing } from '../../i18n/routing'
 import '../globals.css'
 import { Navigation } from '../../components/Navigation'
 import { Footer } from '../../components/Footer'
-import { CartProvider } from '../../context/CartContext'
 import { ThemeProvider } from '../../components/ThemeProvider'
 import QueryProvider from '../../providers/query-provider'
 
@@ -43,13 +42,11 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <NextIntlClientProvider messages={messages}>
-              <CartProvider>
-                <div className="min-h-screen bg-gradient-to-br from-background via-purple-50/50 dark:via-purple-900/50 to-background">
-                  <Navigation />
-                  <main>{children}</main>
-                  <Footer />
-                </div>
-              </CartProvider>
+              <div className="min-h-screen bg-gradient-to-br from-background via-purple-50/50 dark:via-purple-900/50 to-background">
+                <Navigation />
+                <main>{children}</main>
+                <Footer />
+              </div>
             </NextIntlClientProvider>
           </ThemeProvider>
         </QueryProvider>

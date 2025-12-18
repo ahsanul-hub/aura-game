@@ -2,7 +2,6 @@
 
 import { Link } from '../i18n/routing'
 import { ArrowRight, Star, TrendingUp, Zap } from 'lucide-react'
-import { useCart } from '../context/CartContext'
 import { toast } from 'sonner'
 import { gamesData } from '../data/gamesData'
 import { GameItem } from '../context/CartContext'
@@ -11,13 +10,7 @@ import { useTranslations } from 'next-intl'
 const featuredGames = gamesData.slice(0, 3)
 
 export function Home() {
-  const { addToCart } = useCart()
   const t = useTranslations('Home')
-
-  const handleAddToCart = (game: GameItem) => {
-    addToCart(game)
-    toast.success(`${game.title} ditambahkan ke cart!`)
-  }
 
   return (
     <div className="min-h-screen">
@@ -147,7 +140,6 @@ export function Home() {
                   <button
                     onClick={(e) => {
                       e.preventDefault()
-                      handleAddToCart(game)
                     }}
                     className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all"
                   >
