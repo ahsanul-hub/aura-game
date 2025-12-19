@@ -1,3 +1,5 @@
+'use client'
+
 import { GetPaymentMethodResponse, PaymentMethod } from '../../types/PaymentMethod'
 import Image from 'next/image'
 

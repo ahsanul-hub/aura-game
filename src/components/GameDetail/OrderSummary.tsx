@@ -1,3 +1,4 @@
+'use client'
 import { ShoppingCart } from 'lucide-react'
 import { Price } from '../../types/Game'
 import { PaymentMethod } from '../../types/PaymentMethod'

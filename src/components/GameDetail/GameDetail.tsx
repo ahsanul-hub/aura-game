@@ -1,6 +1,5 @@
 'use client'
-import Image from 'next/image'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useGetGamesBySlug } from '../../hooks/useGame'
 import { useState } from 'react'
 import { CheckCircle2, Info, Mail, ShoppingCart } from 'lucide-react'
@@ -16,12 +15,21 @@ import PackageGame from './PackageGame'
 import PaymentMethodComponent from './PaymentMethod'
 import EmailInput from './EmailInput'
 import OrderSummary from './OrderSummary'
+import OrderDetailModal from './OrderModal'
+
+const generateOrderId = () => {
+  return `TRX-${Date.now()}`
+}
 
 export function GameDetailComponent() {
   const { slug } = useParams<{ slug: string }>()
+  const router = useRouter()
+
   const { data: dataGameDetail, isLoading: isLoadingGameDetail } = useGetGamesBySlug(slug)
   const { data: dataPaymentMethods, isLoading: isLoadingPaymentMethods } = useGetPaymentMethod()
+
   const [email, setEmail] = useState<string>('')
+  const [showModal, setShowModal] = useState<boolean>(false)
   const [selectedPackage, setSelectedPackage] = useState<Price | null>(null)
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod>(null)
 
@@ -33,7 +41,18 @@ export function GameDetailComponent() {
       toast.error('Lengkapi Field yang Kosong')
       return
     }
-    toast.success('Top-up diproses 🎉')
+
+    setShowModal(true)
+  }
+  const params = useParams<{ locale: 'id' | 'en' }>()
+
+  const locale = params.locale ?? 'id'
+
+  const handleConfirmOrder = () => {
+    const orderId = generateOrderId()
+
+    setShowModal(false)
+    router.push(`/${locale}/transaction/${orderId}`)
   }
 
   if (isLoadingGameDetail && isLoadingPaymentMethods) {
@@ -67,7 +86,22 @@ export function GameDetailComponent() {
           <EmailInput email={email} setEmail={setEmail} />
 
           {/* Order Summary Navbar - Sticky Bottom */}
-          <OrderSummary activePackage={activePackage} activePayment={activePayment} formatPrice={formatPrice} onSubmit={handleSubmit} />
+          <OrderSummary
+            activePackage={activePackage}
+            activePayment={activePayment}
+            formatPrice={formatPrice}
+            onSubmit={handleSubmit}
+          />
+
+          <OrderDetailModal
+            open={showModal}
+            onClose={() => setShowModal(false)}
+            packageData={activePackage}
+            payment={activePayment}
+            email={email}
+            formatPrice={formatPrice}
+            onConfirm={handleConfirmOrder}
+          />
         </div>
       </div>
     </div>

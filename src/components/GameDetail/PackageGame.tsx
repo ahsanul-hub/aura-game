@@ -1,3 +1,5 @@
+'use client'
+
 import { CheckCircle2 } from 'lucide-react'
 import { GetGameResponse, Price } from '../../types/Game'
 import Image from 'next/image'
