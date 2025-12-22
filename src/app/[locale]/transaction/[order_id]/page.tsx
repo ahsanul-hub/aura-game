@@ -89,7 +89,7 @@ export default function TransactionStatusPage() {
 
           {/* ACTION */}
           <button
-            className={`w-full rounded-full cursor-pointer py-3 font-semibold transition active:scale-95 ${config.btnClass}`}
+            className={`w-full text-white rounded-full cursor-pointer py-3 font-semibold transition active:scale-95 ${config.btnClass}`}
           >
             {config.button}
           </button>

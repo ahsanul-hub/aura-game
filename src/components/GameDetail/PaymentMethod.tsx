@@ -56,7 +56,7 @@ export default function PaymentMethodComponent({
 
         {/* Payment Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-          {PaymentMethod.data.map((payment) => {
+          {PaymentMethod?.data?.map((payment) => {
             const isSelected = activePayment?.id === payment.id
 
             return (
