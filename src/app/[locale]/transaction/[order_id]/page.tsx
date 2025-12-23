@@ -78,21 +78,36 @@ export default function TransactionStatusPage() {
             <Row label="Payment No" value={data.payment_number} />
             <Row label="Metode" value={data.payment_channel?.toUpperCase()} />
 
-            {isPending && !isQRIS && data.payment_url && (
-              <LinkRow label="Pembayaran" value={data.payment_url} />
-            )}
-
             {isPending && isQRIS && data.qr_code_url && <QRCodeSection qr={data.qr_code_url} />}
 
             <TotalRow amount={data.amount} />
           </div>
 
           {/* ACTION */}
-          <button
-            className={`w-full text-white rounded-full cursor-pointer py-3 font-semibold transition active:scale-95 ${config.btnClass}`}
-          >
-            {config.button}
-          </button>
+          {isPending ? (
+            !isQRIS && data.payment_url ? (
+              <a
+                href={data.payment_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`
+        w-full flex items-center justify-center gap-2
+        rounded-full bg-gradient-to-r from-pink-500 to-purple-600
+        hover:from-pink-600 hover:to-purple-700
+        active:scale-95
+        text-white font-semibold py-3 transition-all shadow-sm hover:shadow-md
+      `}
+              >
+                Lanjutkan Pembayaran
+              </a>
+            ) : null
+          ) : (
+            <button
+              className={`w-full text-white rounded-full cursor-pointer py-3 font-semibold transition active:scale-95 ${config.btnClass}`}
+            >
+              {config.button}
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -105,32 +120,6 @@ function StatusHeader({ icon, title, desc }: StatusConfig) {
       {icon}
       <h1 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h1>
       <p className="text-sm text-gray-500 dark:text-gray-400">{desc}</p>
-    </div>
-  )
-}
-
-function LinkRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex justify-between gap-4 items-center">
-      <span className="text-gray-500">{label}</span>
-      <a
-        href={value}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="
-          px-4 py-1.5
-          text-sm font-semibold
-          rounded-full
-          bg-gradient-to-r from-pink-500 to-purple-600
-          text-white
-          hover:from-pink-600 hover:to-purple-700
-          transition-all
-          shadow-sm hover:shadow-md
-          active:scale-95
-        "
-      >
-        Buka Pembayaran
-      </a>
     </div>
   )
 }
