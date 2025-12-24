@@ -127,7 +127,7 @@ export function Games() {
               <div className="aspect-[16/9] overflow-hidden relative">
                 <Image
                   fill
-                  src={game.thumbnail_url}
+                  src={game.thumbnail_url || 'https://api.dicebear.com/9.x/glass/svg'}
                   alt={game.name}
                   className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
                 />

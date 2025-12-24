@@ -18,13 +18,17 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
       },
+      {
+        protocol: 'https',
+        hostname : 'api.dicebear.com',
+      },
     ],
   },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.BACKEND_URL}/:path*`, 
+        destination: `${process.env.BACKEND_URL}/:path*`,
       },
     ]
   },
