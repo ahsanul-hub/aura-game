@@ -6,7 +6,7 @@ export function useGetPaymentMethod() {
   const { data, isLoading } = useQuery<GetPaymentMethodResponse>({
     queryKey: ['get-payment-methods'],
     queryFn: async () => {
-      const res = await api.get('payment-methods')
+      const res = await api.get('/v1/payment-methods')
       return res.data
     },
   })

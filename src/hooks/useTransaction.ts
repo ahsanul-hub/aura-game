@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 export function useCreateTransaction() {
   return useMutation({
     mutationFn: async (payload: any) => {
-      const res = await api.post('/transactions', payload)
+      const res = await api.post('/v1/transactions', payload)
       return res.data
     },
     onError: () => {
@@ -19,7 +19,7 @@ export function useGetTransaction(id: string) {
   const { data, isLoading } = useQuery<GetTransactionResponse>({
     queryKey: ['get-transaction-detail', id],
     queryFn: async () => {
-      const res = await api.get(`/transactions/${id}`)
+      const res = await api.get(`/v1/transactions/${id}`)
       return res.data
     },
   })

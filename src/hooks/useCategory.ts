@@ -6,7 +6,7 @@ export function useGetCategory() {
   const { data, isLoading } = useQuery<GetCategoryResponse>({
     queryKey: ['get-category'],
     queryFn: async () => {
-      const res = await api.get('/categories')
+      const res = await api.get('/v1/categories')
       return res.data
     },
   })
