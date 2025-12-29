@@ -20,7 +20,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname : 'api.dicebear.com',
+        hostname: 'api.dicebear.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 's3.nevaobjects.id',
       },
     ],
   },
