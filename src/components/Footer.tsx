@@ -1,21 +1,12 @@
-"use client";
+'use client'
 
-import { Link } from "../i18n/routing";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Youtube,
-  Mail,
-  Phone,
-  MapPin,
-  Gamepad2,
-} from "lucide-react";
-import { useTranslations } from "next-intl";
+import { Link } from '../i18n/routing'
+import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin, Gamepad2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export function Footer() {
-  const t = useTranslations("Footer");
-  const tNav = useTranslations("Navigation");
+  const t = useTranslations('Footer')
+  const tNav = useTranslations('Navigation')
 
   return (
     <footer className="bg-white/80 dark:bg-black/40 backdrop-blur-sm border-t border-purple-200 dark:border-purple-500/20 pt-16 ">
@@ -31,13 +22,14 @@ export function Footer() {
                 Aura<span className="text-purple-600 dark:text-purple-400">Game</span>
               </span>
             </Link>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">{t("about")}</p>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">{t('about')}</p>
             <div className="flex gap-4">
               {[Facebook, Twitter, Instagram, Youtube].map((Icon, i) => (
                 <a
                   key={i}
                   href="#"
-                  className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400 hover:bg-purple-500 hover:text-white transition-all">
+                  className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400 hover:bg-purple-500 hover:text-white transition-all"
+                >
                   <Icon className="w-5 h-5" />
                 </a>
               ))}
@@ -46,27 +38,22 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-6">{t("links")}</h3>
+            <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-6">{t('links')}</h3>
             <ul className="space-y-4">
               <li>
                 <Link
                   href="/"
-                  className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                  {tNav("home")}
+                  className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                >
+                  {tNav('home')}
                 </Link>
               </li>
               <li>
                 <Link
                   href="/games"
-                  className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                  {tNav("games")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/cart"
-                  className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                  {tNav("cart")}
+                  className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                >
+                  {tNav('games')}
                 </Link>
               </li>
             </ul>
@@ -74,9 +61,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-6">
-              {t("contact")}
-            </h3>
+            <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-6">{t('contact')}</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-gray-600 dark:text-gray-400">
                 <MapPin className="w-5 h-5 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-1" />
@@ -118,10 +103,10 @@ export function Footer() {
 
         <div className="border-t border-purple-200 dark:border-purple-500/20 pt-8 text-center">
           <p className="text-gray-500 dark:text-gray-500">
-            &copy; {new Date().getFullYear()} AuraGame. {t("rights")}
+            &copy; {new Date().getFullYear()} AuraGame. {t('rights')}
           </p>
         </div>
       </div>
     </footer>
-  );
+  )
 }

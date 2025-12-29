@@ -1,72 +1,71 @@
 {
-    "Navigation": {
-        "home": "Beranda",
-        "games": "Jelajahi Game",
-        "cart": "Keranjang Belanja",
-        "login": "Masuk",
-        "promo": "Promo"
-    },
-    "Home": {
-        "heroTitle": "Tingkatkan Gaming Anda",
-        "heroSubtitle": "Dapatkan game terbaik dengan harga terbaik. Ribuan game menanti untuk dimainkan!",
-        "browseGames": "Jelajahi Game",
-        "viewPromo": "Lihat Promo",
-        "specialPromo": "Promo Spesial Bulan Ini",
-        "trending": "Sedang Tren",
-        "popularGames": "Game Populer",
-        "viewAll": "Lihat Semua",
-        "buy": "Beli"
-    },
-    "Footer": {
-        "about": "Platform terpercaya untuk membeli game digital dengan harga terbaik dan pengiriman instan.",
-        "links": "Tautan Cepat",
-        "contact": "Hubungi Kami",
-        "rights": "Hak cipta dilindungi."
-    },
-    "Cart": {
-        "title": "Keranjang Belanja",
-        "empty": "Keranjang Anda kosong",
-        "checkout": "Pembayaran",
-        "total": "Total",
-        "subtotal": "Subtotal",
-        "tax": "Pajak (10%)",
-        "continue": "Lanjut Belanja",
-        "items": "{count} game dalam keranjang"
-    },
-    "Games": {
-        "title": "Katalog Game",
-        "searchPlaceholder": "Cari game favoritmu...",
-        "allCategories": "Semua Kategori",
-        "sortBy": "Urutkan",
-        "priceAsc": "Harga: Rendah ke Tinggi",
-        "priceDesc": "Harga: Tinggi ke Rendah",
-        "resetFilter": "Reset Filter",
-        "detail": "Detail"
-    },
-    "GameDetail": {
-        "back": "Kembali",
-        "description": "Deskripsi",
-        "systemSpecs": "Spesifikasi System",
-        "minimum": "Minimum",
-        "recommended": "Recommended",
-        "addToCart": "Masukkan Keranjang",
-        "buyNow": "Beli Sekarang",
-        "relatedGames": "Game Serupa"
-    },
-    "Payment": {
-        "title": "Checkout Pembayaran",
-        "orderDetail": "Detail Pesanan",
-        "totalPayment": "Total Pembayaran",
-        "paymentMethod": "Metode Pembayaran",
-        "buyerInfo": "Informasi Pembeli",
-        "fullName": "Nama Lengkap",
-        "email": "Email",
-        "payNow": "Bayar Sekarang",
-        "processing": "Memproses...",
-        "backToCart": "Kembali ke Cart"
-    },
-    "Common": {
-        "loading": "Memuat...",
-        "error": "Terjadi kesalahan"
-    }
+  "Navigation": {
+    "home": "Beranda",
+    "games": "Jelajahi Game",
+    "login": "Masuk",
+    "transaction": "Transaksi"
+  },
+  "Home": {
+    "heroTitle": "Tingkatkan Skill Gaming Anda",
+    "heroSubtitle": "Dapatkan game terbaik dengan harga terbaik. Ribuan game menanti untuk dimainkan!",
+    "browseGames": "Jelajahi Game",
+    "viewPromo": "Lihat Promo",
+    "specialPromo": "Promo Spesial Bulan Ini",
+    "trending": "Sedang Tren",
+    "popularGames": "Game Populer",
+    "viewAll": "Lihat Semua",
+    "buy": "Beli"
+  },
+  "Footer": {
+    "about": "Platform terpercaya untuk membeli game digital dengan harga terbaik dan pengiriman instan.",
+    "links": "Tautan Cepat",
+    "contact": "Hubungi Kami",
+    "rights": "Hak cipta dilindungi."
+  },
+  "Cart": {
+    "title": "Keranjang Belanja",
+    "empty": "Keranjang Anda kosong",
+    "checkout": "Pembayaran",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "tax": "Pajak (10%)",
+    "continue": "Lanjut Belanja",
+    "items": "{count} game dalam keranjang"
+  },
+  "Games": {
+    "title": "Katalog Game",
+    "searchPlaceholder": "Cari game favoritmu...",
+    "allCategories": "Semua Kategori",
+    "sortBy": "Urutkan",
+    "priceAsc": "Harga: Rendah ke Tinggi",
+    "priceDesc": "Harga: Tinggi ke Rendah",
+    "resetFilter": "Reset Filter",
+    "detail": "Detail"
+  },
+  "GameDetail": {
+    "back": "Kembali",
+    "description": "Deskripsi",
+    "systemSpecs": "Spesifikasi System",
+    "minimum": "Minimum",
+    "recommended": "Recommended",
+    "addToCart": "Masukkan Keranjang",
+    "buyNow": "Beli Sekarang",
+    "relatedGames": "Game Serupa"
+  },
+  "Payment": {
+    "title": "Checkout Pembayaran",
+    "orderDetail": "Detail Pesanan",
+    "totalPayment": "Total Pembayaran",
+    "paymentMethod": "Metode Pembayaran",
+    "buyerInfo": "Informasi Pembeli",
+    "fullName": "Nama Lengkap",
+    "email": "Email",
+    "payNow": "Bayar Sekarang",
+    "processing": "Memproses...",
+    "backToCart": "Kembali ke Cart"
+  },
+  "Common": {
+    "loading": "Memuat...",
+    "error": "Terjadi kesalahan"
+  }
 }

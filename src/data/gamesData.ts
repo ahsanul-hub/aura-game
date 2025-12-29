@@ -9,7 +9,7 @@ export const gamesResponse: ApiResponse<Game[]> = {
       id: 'g-1',
       category_id: '1',
       provider_id: 'prov-1',
-      name: 'Blade of Destiny',
+      name: 'Stecu Gaming',
       slug: 'blade-of-destiny',
       code: 'BOD001',
       thumbnail_url:
@@ -41,7 +41,7 @@ export const gamesResponse: ApiResponse<Game[]> = {
       id: 'g-2',
       category_id: '2',
       provider_id: 'prov-1',
-      name: 'Lost Island Quest',
+      name: 'The Destiny of Bekasuy',
       slug: 'lost-island-quest',
       code: 'LIQ002',
       thumbnail_url:
