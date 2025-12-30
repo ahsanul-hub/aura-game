@@ -90,7 +90,7 @@ export function Games() {
             ) : isErrorCategories ? (
               <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-red-50 dark:bg-red-500/10 text-sm">
                 <span className="text-red-600 dark:text-red-400 font-medium">
-                  Failed to load categories
+                  Failed To Fetch Categories
                 </span>
 
                 <button
@@ -102,7 +102,7 @@ export function Games() {
               </div>
             ) : categories.length === 0 ? (
               <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 dark:bg-white/5 text-sm text-gray-500 dark:text-gray-400">
-                No categories available
+                Categories not Available
               </div>
             ) : (
               categories.map((category) => (
@@ -178,7 +178,7 @@ export function Games() {
           </div>
         ) : filteredGames.length === 0 ? (
           <div className=" col-span-full flex flex-col items-center justify-center py-16 text-center">
-            No Games available
+            Game not Available
           </div>
         ) : (
           filteredGames?.map((game, index) => (

@@ -14,7 +14,9 @@
     "trending": "Sedang Tren",
     "popularGames": "Game Populer",
     "viewAll": "Lihat Semua",
-    "buy": "Beli"
+    "buy": "Beli",
+    "notAvailableCategories": "Gagal memuat Kategori",
+    "notAvailableGame": "Gagal memuat Game"
   },
   "Footer": {
     "about": "Platform terpercaya untuk membeli game digital dengan harga terbaik dan pengiriman instan.",

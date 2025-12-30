@@ -41,7 +41,9 @@
     "priceAsc": "Price: Low to High",
     "priceDesc": "Price: High to Low",
     "resetFilter": "Reset Filter",
-    "detail": "Detail"
+    "detail": "Detail",
+    "notAvailableCategories": "Failed to load categories",
+    "notAvailableGame": "Failed to load Game"
   },
   "GameDetail": {
     "back": "Back",
