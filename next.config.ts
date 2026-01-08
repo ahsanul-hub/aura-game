@@ -44,14 +44,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/v1/:path*',
-        destination: 'http://103.228.118.187:4001/v1/:path*',
-      },
-    ]
-  },
 }
 
 export default withNextIntl(nextConfig)
