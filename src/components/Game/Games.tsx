@@ -33,6 +33,8 @@ export function Games() {
     if (!DataCatalogGame?.data) return []
 
     return DataCatalogGame.data.filter((game) => {
+      if (!game.is_show) return false
+
       const matchesSearch = game.name.toLowerCase().includes(searchTerm.toLowerCase())
 
       const matchesCategory = selectedCategory === 'all' || game.category.slug === selectedCategory
