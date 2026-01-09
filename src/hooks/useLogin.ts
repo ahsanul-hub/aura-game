@@ -9,7 +9,7 @@ export default function useLoginGoogleOauth() {
   const searchParams = useSearchParams()
 
   const loginWithGoogle = () => {
-    const apiUrl = 'https://dev-api.pakargaming.id:4001/v1'
+    const apiUrl = 'https://dev-api.pakargaming.id/v1'
     window.location.href = `${apiUrl}/auth/google`
   }
 
