@@ -34,7 +34,6 @@ export function GameDetailComponent() {
   // Handle Form
   const orderForm = useForm<OrderFormValues>({
     resolver: zodResolver(orderSchema),
-
     defaultValues: {
       email: '',
       game_data: {},
@@ -62,6 +61,7 @@ export function GameDetailComponent() {
   const [showModal, setShowModal] = useState<boolean>(false)
   const [selectedPackage, setSelectedPackage] = useState<Price | null>(null)
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod>(null)
+
   const [isRedirecting, setIsRedirecting] = useState(false)
 
   // Refs for scrolling
@@ -77,6 +77,8 @@ export function GameDetailComponent() {
   // Watch form values for auto-scroll
   const gameData = orderForm.watch('game_data')
   const email = orderForm.watch('email')
+
+  const orderFormValue = orderForm.watch()
 
   // Auto-scroll logic for Step 1 -> Step 2
   useEffect(() => {
@@ -201,6 +203,8 @@ export function GameDetailComponent() {
 
             <div className="hidden lg:block">
               <OrderSummary
+                category_code="ML"
+                orderFormValue={orderFormValue}
                 activePackage={activePackage}
                 activePayment={activePayment}
                 formatPrice={formatPrice}
@@ -288,6 +292,8 @@ export function GameDetailComponent() {
 
             <div className="lg:hidden mt-6">
               <OrderSummary
+                category_code="ML"
+                orderFormValue={orderFormValue}
                 activePackage={activePackage}
                 activePayment={activePayment}
                 formatPrice={formatPrice}
