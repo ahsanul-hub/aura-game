@@ -1,9 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { api } from '../api/axios'
-import { GetTransactionResponse } from '../types/Transaction'
+import { GetTransactionResponse, GetTransactionResponses } from '../types/Transaction'
 import { toast } from 'sonner'
 import axios from 'axios'
-import { OrderFormValues } from '../schemas/order_schema'
 
 export function useCreateTransaction() {
   return useMutation({
@@ -29,27 +28,47 @@ export function useGetTransaction(id: string) {
   return { data, isLoading }
 }
 
-export function useCheckID(payload: OrderFormValues, country: string, code: string) {
-  return useQuery({
-    queryKey: ['check-id', code, payload.game_data],
-    enabled: false,
+export function useGetTransactionByEmail(email?: string, page = 1) {
+  return useQuery<GetTransactionResponses>({
+    queryKey: ['transactions', email, page],
     queryFn: async () => {
-      const res = await axios.post(
-        'https://dev.lapakgaming.com/api/uid-check',
-        {},
-        {
-          params: {
-            category_code: code,
-            ...payload.game_data,
-          },
-          headers: {
-            Authorization: `Bearer 04fd8332dd54203687042170740acaf08d775ad9d4be2f83b256f4e3bb16f6bb`,
-            'X-COUNTRY': country,
-          },
-        }
-      )
+      const res = await api.get('/v1/transactions/email/' + email, {
+        params: {
+          page,
+          limit: 10,
+        },
+      })
+      return res.data
+    },
+    enabled: !!email,
+  })
+}
+
+type CheckIDPayload = {
+  category_code: string
+  game_id: string
+  provider_id: string
+  game_data: Record<string, string>
+}
+export function useCheckID() {
+  return useMutation({
+    mutationFn: async (payload: CheckIDPayload) => {
+      const res = await api.post('/v1/transactions/check-id', payload)
 
       return res.data
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status
+        const message = error.response?.data?.message || error.response?.data?.error
+
+        if (status === 400) {
+          toast.error(message || 'Akun tidak ditemukan')
+          return
+        }
+      }
+
+      toast.error('Gagal cek ID')
     },
   })
 }

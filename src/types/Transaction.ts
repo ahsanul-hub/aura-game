@@ -1,4 +1,4 @@
-import { ApiResponse } from './Global'
+import { ApiResponse, ApiResponseWithMeta } from './Global'
 
 export interface PaymentData {
   id: string
@@ -24,3 +24,4 @@ export interface PaymentGuide {
 }
 
 export type GetTransactionResponse = ApiResponse<PaymentData>
+export type GetTransactionResponses = ApiResponseWithMeta<PaymentData[]>

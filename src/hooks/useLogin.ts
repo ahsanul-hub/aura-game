@@ -10,6 +10,8 @@ export default function useLoginGoogleOauth() {
 
   const loginWithGoogle = () => {
     const apiUrl = 'https://dev-api.pakargaming.id/v1'
+    //const apiUrl = 'http://localhost:4001/v1'
+
     window.location.href = `${apiUrl}/auth/google`
   }
 

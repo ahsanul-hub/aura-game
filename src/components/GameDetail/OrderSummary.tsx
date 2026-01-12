@@ -4,7 +4,6 @@ import { GameInput, Price } from '../../types/Game'
 import { PaymentMethod } from '../../types/PaymentMethod'
 import { OrderFormValues } from '../../schemas/order_schema'
 import { useCheckID } from '../../hooks/useTransaction'
-import { UseFormReturn } from 'react-hook-form'
 
 interface OrderSummaryProps {
   activePackage: Price | null
@@ -24,18 +23,20 @@ export default function OrderSummary({
   category_code,
 }: // gameInput,
 OrderSummaryProps) {
-  const { refetch: checkID, isFetching: isCheckingID } = useCheckID(
-    orderFormValue,
-    'id',
-    category_code
-  )
+  const { mutateAsync, isPending } = useCheckID()
 
   const handleBuyNow = async () => {
     try {
-      const res = await checkID()
-      console.log(res)
-    } catch (err: any) {
-      alert(err)
+      const res = await mutateAsync({
+        category_code,
+        game_id: orderFormValue.game_id,
+        provider_id: orderFormValue.provider_id,
+        game_data: orderFormValue.game_data,
+      })
+
+      onSubmit()
+    } catch (err) {
+      console.error(err)
     }
   }
 
@@ -82,7 +83,7 @@ OrderSummaryProps) {
 
       <button
         onClick={handleBuyNow}
-        disabled={isCheckingID}
+        disabled={isPending}
         className="
     w-full
     bg-gradient-to-r from-pink-500 to-purple-600
@@ -97,7 +98,7 @@ OrderSummaryProps) {
   "
       >
         <ShoppingCart className="w-4 h-4" />
-        {isCheckingID ? 'Mengecek ID...' : 'Beli Sekarang'}
+        {isPending ? 'Cek Akun....' : 'Beli Sekarang'}
       </button>
     </div>
   )

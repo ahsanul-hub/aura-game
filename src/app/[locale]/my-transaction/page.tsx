@@ -1,4 +1,29 @@
+'use client'
+
+import useAuth from '../../../components/Navigation'
+import { useGetTransactionByEmail } from '../../../hooks/useTransaction'
+import { useRouter, useParams } from 'next/navigation'
+import { useState } from 'react'
+
 export default function MyTransaction() {
+  const { user, loading } = useAuth()
+  const email = user?.email
+
+  const [page, setPage] = useState(1)
+
+  const { data, isLoading } = useGetTransactionByEmail(email, page)
+
+  const router = useRouter()
+  const params = useParams()
+  const locale = (params?.locale as string) || 'id'
+
+  if (loading || isLoading) {
+    return <div className="min-h-screen bg-slate-950 text-slate-100 p-6">Loading...</div>
+  }
+
+  const transactions = data?.data ?? []
+  const meta = data?.meta
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 p-6">
       <h1 className="text-2xl font-semibold mb-6">
@@ -9,9 +34,7 @@ export default function MyTransaction() {
         <table className="w-full text-sm">
           <thead className="bg-slate-800 text-slate-300">
             <tr>
-              <th className="px-4 py-3 text-left font-medium">
-                Transaction ID
-              </th>
+              <th className="px-4 py-3 text-left font-medium">Transaction ID</th>
               <th className="px-4 py-3 text-left font-medium">Date</th>
               <th className="px-4 py-3 text-left font-medium">Amount</th>
               <th className="px-4 py-3 text-left font-medium">Status</th>
@@ -20,67 +43,79 @@ export default function MyTransaction() {
           </thead>
 
           <tbody className="divide-y divide-slate-800">
-            <tr className="hover:bg-slate-800/60 transition">
-              <td className="px-4 py-3 font-mono text-xs text-slate-400">
-                TRX-102391
-              </td>
-              <td className="px-4 py-3">2025-01-12</td>
-              <td className="px-4 py-3 font-semibold">
-                Rp 150.000
-              </td>
-              <td className="px-4 py-3">
-                <span className="inline-flex rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
-                  Success
-                </span>
-              </td>
-              <td className="px-4 py-3">
-                <button className="text-purple-400 hover:text-purple-300 transition">
-                  View
-                </button>
-              </td>
-            </tr>
+            {transactions.length === 0 && (
+              <tr>
+                <td colSpan={5} className="px-4 py-6 text-center text-slate-400">
+                  No transactions found
+                </td>
+              </tr>
+            )}
 
-            <tr className="hover:bg-slate-800/60 transition">
-              <td className="px-4 py-3 font-mono text-xs text-slate-400">
-                TRX-102392
-              </td>
-              <td className="px-4 py-3">2025-01-10</td>
-              <td className="px-4 py-3 font-semibold">
-                Rp 300.000
-              </td>
-              <td className="px-4 py-3">
-                <span className="inline-flex rounded-full bg-yellow-500/10 px-3 py-1 text-xs font-medium text-yellow-400">
-                  Pending
-                </span>
-              </td>
-              <td className="px-4 py-3">
-                <button className="text-purple-400 hover:text-purple-300 transition">
-                  View
-                </button>
-              </td>
-            </tr>
+            {transactions.map((trx) => (
+              <tr key={trx.id} className="hover:bg-slate-800/60 transition">
+                <td className="px-4 py-3 font-mono text-xs text-slate-400">{trx.payment_number}</td>
 
-            <tr className="hover:bg-slate-800/60 transition">
-              <td className="px-4 py-3 font-mono text-xs text-slate-400">
-                TRX-102393
-              </td>
-              <td className="px-4 py-3">2025-01-05</td>
-              <td className="px-4 py-3 font-semibold">
-                Rp 75.000
-              </td>
-              <td className="px-4 py-3">
-                <span className="inline-flex rounded-full bg-red-500/10 px-3 py-1 text-xs font-medium text-red-400">
-                  Failed
-                </span>
-              </td>
-              <td className="px-4 py-3">
-                <button className="text-purple-400 hover:text-purple-300 transition">
-                  View
-                </button>
-              </td>
-            </tr>
+                <td className="px-4 py-3">
+                  {new Date(trx.created_at).toLocaleDateString('id-ID')}
+                </td>
+
+                <td className="px-4 py-3 font-semibold">Rp {trx.amount.toLocaleString('id-ID')}</td>
+
+                <td className="px-4 py-3">
+                  <span
+                    className={`inline-flex rounded-full px-3 py-1 text-xs font-medium
+                      ${
+                        trx.status === 'SUCCESS'
+                          ? 'bg-emerald-500/10 text-emerald-400'
+                          : trx.status === 'PENDING'
+                          ? 'bg-yellow-500/10 text-yellow-400'
+                          : 'bg-red-500/10 text-red-400'
+                      }
+                    `}
+                  >
+                    {trx.status}
+                  </span>
+                </td>
+
+                <td className="px-4 py-3">
+                  <button
+                    onClick={() => router.push(`/${locale}/transaction/${trx.id}`)}
+                    className="text-purple-400 hover:text-purple-300 transition cursor-pointer"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
+
+        {/* PAGINATION */}
+        {meta && meta.total_page > 1 && (
+          <div className="flex items-center justify-between px-4 py-3 border-t border-slate-800">
+            <span className="text-sm text-slate-400">
+              Page {meta.page} of {meta.total_page}
+            </span>
+
+            <div className="flex gap-2">
+              <button
+                disabled={page === 1}
+                onClick={() => setPage((p) => p - 1)}
+                className="px-3 py-1 rounded bg-slate-800 text-slate-300 disabled:opacity-50 cursor-pointer"
+              >
+                Prev
+              </button>
+
+              <button
+                disabled={page === meta.total_page}
+                onClick={() => setPage((p) => p + 1)}
+                className="px-3 py-1 rounded bg-slate-800 text-slate-300 disabled:opacity-50 cursor-pointer"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

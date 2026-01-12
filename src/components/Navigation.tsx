@@ -1,5 +1,4 @@
 'use client'
-
 import { Link, usePathname } from '../i18n/routing'
 import { Menu, X, Gamepad2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -22,7 +21,7 @@ export function getAuthUser(): AuthUser | null {
 
   const user = Cookies.get('user')
   if (!user) return null
-  console.log(user)
+
   try {
     return JSON.parse(user)
   } catch {

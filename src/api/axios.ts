@@ -7,6 +7,7 @@ export const api = axios.create({
     Accept: 'application/json',
   },
 })
+
 // export const api = axios.create({
 //   baseURL: 'http://localhost:4001',
 //   headers: {
