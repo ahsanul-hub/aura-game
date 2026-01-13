@@ -65,6 +65,12 @@ export interface GamDetail {
   input: GameInput[]
   product: Price[]
 }
+export interface GameByCategory {
+  category_id: string
+  category_name: string
+  games: Game[]
+}
 
+export type GetGamesByCategoryResponse = ApiResponse<GameByCategory[]>
 export type GetGamesResponse = ApiResponse<Game[]>
 export type GetGameResponse = ApiResponse<GamDetail>

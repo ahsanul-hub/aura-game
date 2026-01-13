@@ -12,7 +12,7 @@ import { GameCardSkeleton } from '../GameCardSkeleton'
 export function Games() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [letter, setLetter] = useState('A')
+  const [letter, setLetter] = useState('all')
   const t = useTranslations('Games')
 
   const {
@@ -129,6 +129,7 @@ export function Games() {
               onChange={(e) => setLetter(e.target.value)}
               className="bg-gray-100 dark:bg-black/40 border border-purple-200 dark:border-purple-500/20 rounded-lg py-2 px-4 text-gray-900 dark:text-white focus:outline-none focus:border-purple-500 text-sm w-full md:w-auto cursor-pointer hover:bg-gray-200 dark:hover:bg-black/60 transition-colors"
             >
+              <option value="all">Semua</option>
               {Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)).map((letter) => (
                 <option key={letter} value={letter}>
                   {letter}

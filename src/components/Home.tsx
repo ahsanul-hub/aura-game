@@ -5,8 +5,8 @@ import { ArrowRight, TrendingUp, Zap } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { gamesResponse } from '../data/gamesData'
 import Image from 'next/image'
-
-const featuredGames = gamesResponse.data.slice(0, 3)
+import { useGetGameByCategory } from '../hooks/useGame'
+import GamesByCategory from './Game/GamesByCategory'
 
 export function Home() {
   const t = useTranslations('Home')
@@ -50,69 +50,7 @@ export function Home() {
         </div>
       </section>
 
-      {/* Featured Games */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 mb-2">
-              <TrendingUp className="w-5 h-5" />
-              <span className="text-sm uppercase tracking-wider">{t('trending')}</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl text-gray-900 dark:text-white">
-              {t('popularGames')}
-            </h2>
-          </div>
-          <Link
-            href="/games"
-            className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 flex items-center gap-2 group"
-          >
-            {t('viewAll')}
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredGames.map((game) => (
-            <div
-              key={game.id}
-              className="group bg-white/80 dark:bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-200 dark:border-purple-500/20 hover:border-purple-400 dark:hover:border-purple-500/50 transition-all hover:shadow-xl hover:shadow-purple-500/20"
-            >
-              <Link href={`/games/${game.id}`} className="block">
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src={game.thumbnail_url}
-                    alt={game.name}
-                    fill
-                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                  />
-
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4"></div>
-                </div>
-              </Link>
-
-              <div className="p-6">
-                <Link href={`/games/${game.id}`}>
-                  <h3 className="text-xl text-gray-900 dark:text-white mb-2 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                    {game.name}
-                  </h3>
-                </Link>
-
-                <div className="flex items-center justify-between">
-                  <div></div>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault()
-                    }}
-                    className="bg-gradient-to-r from-purple-500 cursor-pointer to-pink-500 text-white px-4 py-2 rounded-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all"
-                  >
-                    {t('buy')}
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <GamesByCategory />
 
       {/* Stats Section */}
       <section className="bg-gray-50/80 dark:bg-black/40 backdrop-blur-sm border-y border-purple-200 dark:border-purple-500/20 py-16">

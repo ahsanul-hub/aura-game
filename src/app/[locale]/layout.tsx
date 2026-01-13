@@ -11,7 +11,7 @@ import QueryProvider from "../../providers/query-provider";
 import { Toaster } from "sonner";
 
 export const metadata = {
-  title: "Aura Game",
+  title: "Pakar Gaming",
   description: "Platform terpercaya untuk membeli game digital",
 };
 
