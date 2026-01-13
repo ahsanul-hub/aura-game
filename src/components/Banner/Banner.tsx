@@ -1,53 +1,41 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-
-type Banner = {
-  id: number
-  image: string
-  title: string
-}
-
-const banners: Banner[] = [
-  {
-    id: 1,
-    title: 'Slide 1',
-    image: 'https://images.unsplash.com/photo-1614179924047-e1ab49a0a0cf?q=80&w=1600',
-  },
-  {
-    id: 2,
-    title: 'Slide 2',
-    image: 'https://images.unsplash.com/photo-1598550476439-6847785fcea6?q=80&w=1600',
-  },
-  {
-    id: 3,
-    title: 'Slide 3',
-    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1600',
-  },
-]
+import { useGetBanners } from '../../hooks/useBanner'
+import { Banner } from '../../types/Banner'
 
 const AUTOPLAY_DELAY = 5000
 
 export default function BannerCarousel() {
+  const { data, isLoading, isError } = useGetBanners()
   const [index, setIndex] = useState(0)
+  const banners: Banner[] = data?.data || []
+
   const total = banners.length
 
-  // Use useCallback to keep the function stable for the useEffect
+  // Next slide
   const next = useCallback(() => {
     setIndex((prev) => (prev + 1 >= total ? 0 : prev + 1))
   }, [total])
 
+  // Previous slide
   const prev = () => {
     setIndex((prev) => (prev - 1 < 0 ? total - 1 : prev - 1))
   }
 
-  // Handle Autoplay
+  // Autoplay
   useEffect(() => {
+    if (total === 0) return
     const timer = setInterval(next, AUTOPLAY_DELAY)
     return () => clearInterval(timer)
-  }, [next, index]) // index in deps resets timer on manual click
+  }, [next, total])
+
+  // Loading / Error / Empty state
+  if (isLoading) return <p>Loading banners...</p>
+  if (isError) return <p className="text-red-500">Failed to load banners.</p>
+  if (total === 0) return <p>No banners found.</p>
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 py-10">
@@ -62,19 +50,23 @@ export default function BannerCarousel() {
               key={banner.id}
               className="w-full flex-shrink-0 relative aspect-[16/9] md:aspect-[21/9]"
             >
-              <Image
-                src={banner.image}
-                alt={banner.title}
-                fill
-                priority={banner.id === 1}
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 1200px"
-              />
+              <a href={banner.redirect_link} target='_blank'>
+                <Image
+                  src={banner.image}
+                  alt={banner.redirect_link || 'banner'}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 1200px"
+                  onError={(e) => {
+                    e.currentTarget.src = '/placeholder.png'
+                  }}
+                />
+              </a>
             </div>
           ))}
         </div>
 
-        {/* NAVIGATION ARROWS - Hidden on mobile, shown on hover on desktop */}
+        {/* NAVIGATION ARROWS */}
         <button
           onClick={prev}
           className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-md text-white p-2 md:p-3 rounded-full transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
