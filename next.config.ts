@@ -42,6 +42,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'instagram.fcgk3-2.fna.fbcdn.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
   },
 }
