@@ -19,7 +19,7 @@ export function Footer() {
                 <Gamepad2 className="w-6 h-6 text-white" />
               </div>
               <span className="text-gray-900 dark:text-white text-xl font-bold">
-                Aura<span className="text-purple-600 dark:text-purple-400">Game</span>
+                Pakar<span className="text-purple-600 dark:text-purple-400">Gaming</span>
               </span>
             </Link>
             <p className="text-gray-600 dark:text-gray-400 mb-6">{t('about')}</p>
@@ -77,7 +77,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
                 <Mail className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-                <span>support@auragame.com</span>
+                <span>support@pakargaming.id</span>
               </li>
             </ul>
           </div>

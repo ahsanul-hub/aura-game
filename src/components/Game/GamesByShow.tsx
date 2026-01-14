@@ -1,21 +1,75 @@
+'use client'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useLocale } from 'next-intl'
 import { useGetShows } from '../../hooks/useShow'
 import { Show } from '../../types/Show'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function GamesByShow() {
   const locale = useLocale()
   const { data, isLoading } = useGetShows()
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      setSelectedId(id)
+    }
+  }
+  const shows = (data?.data ?? []).filter((show) => show.IsShow)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      let currentId: string | null = null
+      shows.forEach((show) => {
+        const el = document.getElementById(`show-${show.ID}`)
+        if (el) {
+          const top = el.getBoundingClientRect().top
+          if (top <= 120) {
+            currentId = show.ID
+          }
+        }
+      })
+      if (currentId) setSelectedId(currentId)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [shows])
 
   if (isLoading) return <GamesByShowSkeleton />
 
-  const shows = (data?.data ?? []).filter((show) => show.IsShow)
-
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
+      {/* ===== SHOW NAVIGATION ===== */}
+      <div className="sticky top-16 z-50 backdrop-blur-md py-3 mb-12 flex flex-wrap gap-4 justify-center  ">
+        {shows.map((show) => {
+          const isSelected = selectedId === `show-${show.ID}`
+          return (
+            <button
+              key={show.ID}
+              onClick={() => scrollToSection(`show-${show.ID}`)}
+              className={`
+          px-4 py-2 rounded-full text-sm font-medium transition
+          cursor-pointer
+          ${
+            isSelected
+              ? 'bg-purple-600/80 text-white border-2 border-purple-500 ring-2 ring-purple-400'
+              : 'bg-purple-600/50 text-white hover:bg-purple-700/70'
+          }
+          ${!isSelected && 'hover:scale-105'}
+        `}
+            >
+              {show.Name}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* ===== SHOW SECTIONS ===== */}
       {shows.map((show) => {
         const isExpanded = expanded[show.ID] ?? false
         const hasManyGames = show.Games.length > 6
@@ -23,7 +77,7 @@ export default function GamesByShow() {
         const ribbon = getRibbon(show)
 
         return (
-          <div key={show.ID}>
+          <div key={show.ID} id={`show-${show.ID}`} className="scroll-mt-36">
             {/* HEADER */}
             <div className="mb-6">
               <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
@@ -31,7 +85,7 @@ export default function GamesByShow() {
               </h2>
             </div>
 
-            {/* GAMES (VERTICAL GRID ONLY) */}
+            {/* GAMES GRID */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
               {games.map((game) => (
                 <Link
@@ -57,9 +111,10 @@ export default function GamesByShow() {
                   {/* IMAGE */}
                   <div className="relative h-44 overflow-hidden">
                     <Image
-                      src={game.ThumbnailURL}
+                      src={game.ThumbnailURL || 'https://api.dicebear.com/9.x/pixel-art/svg'}
                       alt={game.Name}
                       fill
+                      priority
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
@@ -95,7 +150,6 @@ export default function GamesByShow() {
     </section>
   )
 }
-
 /* ===== RIBBON PRIORITY ===== */
 function getRibbon(show: Show) {
   if (show.IsPopular) {
