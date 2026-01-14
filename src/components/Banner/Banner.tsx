@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useGetBanners } from '../../hooks/useBanner'
 import { Banner } from '../../types/Banner'
+import { ShowSkeleton } from './BannerSkeleton'
 
 const AUTOPLAY_DELAY = 5000
 
@@ -33,7 +34,7 @@ export default function BannerCarousel() {
   }, [next, total])
 
   // Loading / Error / Empty state
-  if (isLoading) return <p>Loading banners...</p>
+  if (isLoading) return <ShowSkeleton />
   if (isError) return <p className="text-red-500">Failed to load banners.</p>
   if (total === 0) return <p>No banners found.</p>
 
@@ -50,7 +51,7 @@ export default function BannerCarousel() {
               key={banner.id}
               className="w-full flex-shrink-0 relative aspect-[16/9] md:aspect-[21/9]"
             >
-              <a href={banner.redirect_link} target='_blank'>
+              <a href={banner.redirect_link} target="_blank">
                 <Image
                   src={banner.image}
                   alt={banner.redirect_link || 'banner'}
