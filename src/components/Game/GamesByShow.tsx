@@ -1,33 +1,29 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useLocale } from 'next-intl'
-import { useGetGameByCategory } from '../../hooks/useGame'
+import { useGetShows } from '../../hooks/useShow'
+import { Show } from '../../types/Show'
 
-export default function GamesByCategory() {
+export default function GamesByShow() {
   const locale = useLocale()
-  const { data, isLoading } = useGetGameByCategory()
+  const { data, isLoading } = useGetShows()
 
   if (isLoading) return null
 
-  const sortedCategories = [...(data?.data ?? [])].sort((a, b) => {
-    if (a.category_name === 'Popular') return -1
-    if (b.category_name === 'Popular') return 1
-    return 0
-  })
+  const shows = (data?.data ?? []).filter((show) => show.IsShow)
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
-      {sortedCategories.map((category) => {
-        const isPopularCategory = category.category_name === 'Popular'
-        const isNewCategory = category.category_name === 'Baru'
-        const enableScroll = category.games.length > 6
+      {shows.map((show) => {
+        const enableScroll = show.Games.length > 6
+        const ribbon = getRibbon(show)
 
         return (
-          <div key={category.category_id}>
+          <div key={show.ID}>
             {/* HEADER */}
             <div className="mb-8">
               <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
-                {category.category_name}
+                {show.Name}
               </h2>
             </div>
 
@@ -39,10 +35,10 @@ export default function GamesByCategory() {
                   : 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6'
               }
             >
-              {category.games.map((game) => (
+              {show.Games.map((game) => (
                 <Link
-                  key={game.id}
-                  href={`/${locale}/games/${game.slug}`}
+                  key={game.ID}
+                  href={`/${locale}/games/${game.Slug}`}
                   className={`group relative rounded-2xl overflow-hidden
                   bg-black border border-white/10
                   hover:border-purple-500/60
@@ -50,32 +46,22 @@ export default function GamesByCategory() {
                   transition-all duration-300
                   ${enableScroll ? 'min-w-[160px] sm:min-w-[180px] snap-start' : ''}`}
                 >
-                  {/* RIBBON */}
-                  {isPopularCategory && (
+                  {/* RIBBON (PRIORITY) */}
+                  {ribbon && (
                     <div
-                      className="absolute top-3 left-[-42px] rotate-[-45deg]
-                      bg-gradient-to-r from-pink-500 to-purple-600
-                      text-white text-[10px] font-bold px-14 py-1 shadow-lg z-20"
+                      className={`absolute top-3 left-[-42px] rotate-[-45deg]
+                      bg-gradient-to-r ${ribbon.className}
+                      text-white text-[10px] font-bold px-14 py-1 shadow-lg z-20`}
                     >
-                      POPULAR
-                    </div>
-                  )}
-
-                  {isNewCategory && (
-                    <div
-                      className="absolute top-3 left-[-42px] rotate-[-45deg]
-                      bg-gradient-to-r from-emerald-500 to-green-600
-                      text-white text-[10px] font-bold px-14 py-1 shadow-lg z-20"
-                    >
-                      NEW
+                      {ribbon.label}
                     </div>
                   )}
 
                   {/* IMAGE */}
                   <div className="relative h-44 overflow-hidden">
                     <Image
-                      src={game.thumbnail_url}
-                      alt={game.name}
+                      src={game.ThumbnailURL}
+                      alt={game.Name}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
@@ -84,7 +70,7 @@ export default function GamesByCategory() {
 
                   {/* TITLE */}
                   <div className="absolute bottom-0 left-0 right-0 p-3">
-                    <p className="text-sm font-medium text-white line-clamp-2">{game.name}</p>
+                    <p className="text-sm font-medium text-white line-clamp-2">{game.Name}</p>
                   </div>
                 </Link>
               ))}
@@ -94,4 +80,30 @@ export default function GamesByCategory() {
       })}
     </section>
   )
+}
+
+/* ===== RIBBON PRIORITY ===== */
+function getRibbon(show: Show) {
+  if (show.IsPopular) {
+    return {
+      label: 'POPULAR',
+      className: 'from-pink-500 to-purple-600',
+    }
+  }
+
+  if (show.IsNew) {
+    return {
+      label: 'NEW',
+      className: 'from-emerald-500 to-green-600',
+    }
+  }
+
+  if (show.IsHot) {
+    return {
+      label: 'HOT',
+      className: 'from-orange-500 to-red-600',
+    }
+  }
+
+  return null
 }

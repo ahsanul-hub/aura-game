@@ -6,8 +6,9 @@ import { useTranslations } from 'next-intl'
 import { gamesResponse } from '../data/gamesData'
 import Image from 'next/image'
 import { useGetGameByCategory } from '../hooks/useGame'
-import GamesByCategory from './Game/GamesByCategory'
+import GamesByCategory from './Game/GamesByShow'
 import BannerComponent from './Banner/Banner'
+import GamesByShow from './Game/GamesByShow'
 
 export function Home() {
   const t = useTranslations('Home')
@@ -17,7 +18,7 @@ export function Home() {
       {/* Hero Section */}
       <BannerComponent />
 
-      <GamesByCategory />
+      <GamesByShow />
 
       {/* Stats Section */}
       <section className="bg-gray-50/80 dark:bg-black/40 backdrop-blur-sm border-y border-purple-200 dark:border-purple-500/20 py-16">

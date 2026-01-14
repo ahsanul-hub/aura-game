@@ -20,7 +20,7 @@ export function LanguageSwitcher() {
   }
 
   return (
-    <div className="relative ">
+    <div className="relative mr-2">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center cursor-pointer gap-2 text-gray-300 hover:text-white transition-colors"

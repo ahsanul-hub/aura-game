@@ -105,7 +105,7 @@ export function Navigation() {
 
             <div className="flex items-center gap-4 border-l border-purple-500/20 dark:border-purple-500/20 pl-8">
               <LanguageSwitcher />
-              <ThemeToggle />
+              {/* <ThemeToggle /> */}
 
               {!user ? (
                 <button
