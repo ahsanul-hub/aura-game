@@ -101,7 +101,7 @@ export function Navigation() {
   }
 
   return (
-    <nav className="border-b border-purple-500/20 dark:border-purple-500/20 bg-white/80 dark:bg-black/20 backdrop-blur-md sticky top-0 z-50">
+    <nav className="border-b border-purple-500/30 dark:border-purple-500/20 bg-white dark:bg-black/20 backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
@@ -120,8 +120,8 @@ export function Navigation() {
                   href={path}
                   className={`${
                     pathname === path
-                      ? 'text-purple-600 dark:text-purple-400'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                      ? 'text-purple-700 font-semibold dark:text-purple-400'
+                      : 'text-gray-900 dark:text-gray-300 hover:text-purple-700 dark:hover:text-white'
                   } transition-colors duration-200 font-medium`}
                 >
                   {label}
@@ -131,21 +131,34 @@ export function Navigation() {
 
             <div className="flex items-center gap-4 border-l border-purple-500/20 dark:border-purple-500/20 pl-8">
               <LanguageSwitcher />
-              {/* <ThemeToggle /> */}
+              <ThemeToggle />
 
               {!user ? (
                 <button
                   onClick={loginWithGoogle}
-                  className="flex items-center gap-3 bg-purple-600 cursor-pointer hover:bg-purple-700 text-white px-6 py-2 rounded-full transition-all hover:shadow-lg hover:shadow-purple-500/25"
+                  className="
+    flex items-center gap-3 cursor-pointer
+    bg-purple-600 hover:bg-purple-700
+    dark:bg-purple-500 dark:hover:bg-purple-600
+    text-white
+    px-6 py-2 rounded-full
+    transition-all
+    shadow-sm hover:shadow-lg
+    hover:shadow-purple-500/30
+  "
                 >
                   {/* Google Logo */}
                   <img
                     src="https://www.svgrepo.com/show/475656/google-color.svg"
                     alt="Google"
-                    className="w-5 h-5 bg-white rounded-full p-0.5"
+                    className="
+      w-5 h-5
+      bg-white rounded-full p-0.5
+      shadow-sm
+    "
                   />
 
-                  <span>{t('login')}</span>
+                  <span className="font-medium">{t('login')}</span>
                 </button>
               ) : (
                 <div className="relative">
@@ -174,7 +187,7 @@ export function Navigation() {
 
                   {/* Dropdown */}
                   {openProfile && (
-                    <div className="absolute right-0 mt-3 w-56 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-2xl border border-purple-500/20 dark:border-purple-500/30 overflow-hidden z-50">
+                    <div className="absolute right-0 mt-3 w-56 rounded-2xl bg-white dark:bg-slate-900/90 backdrop-blur-xl shadow-xl border border-purple-500/20 dark:border-purple-500/30 overflow-hidden z-50">
                       {/* Header */}
                       <div className="flex items-center gap-3 px-4 py-4 border-b border-purple-500/20">
                         <img
@@ -194,7 +207,7 @@ export function Navigation() {
                       <div className="py-2">
                         <button
                           onClick={logout}
-                          className="group cursor-pointer w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-500/10 transition"
+                          className="group cursor-pointer w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-900 dark:text-gray-300 hover:bg-purple-100 dark:hover:bg-purple-500/10 transition"
                         >
                           <LogOut className="w-4 h-4 text-red-500 group-hover:scale-110 transition-transform" />
                           <span className="text-red-600 dark:text-red-400 font-medium">Logout</span>
@@ -214,9 +227,9 @@ export function Navigation() {
             {!user ? (
               <button
                 onClick={() => {
-                  setIsMobileMenuOpen(!isMobileMenuOpen), loginWithGoogle()
+                  ;(setIsMobileMenuOpen(!isMobileMenuOpen), loginWithGoogle())
                 }}
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white p-2"
+                className="text-gray-900 dark:text-gray-300 hover:text-purple-700 dark:hover:text-white p-2"
               >
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -247,8 +260,8 @@ export function Navigation() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`block px-3 py-2 rounded-md text-base font-medium ${
                   pathname === path
-                    ? 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-500/10'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-purple-50/50 dark:hover:bg-purple-500/5'
+                    ? 'text-purple-700 font-semibold dark:text-purple-400 bg-purple-50 dark:bg-purple-500/10'
+                    : 'text-gray-900 dark:text-gray-300 hover:text-purple-700 dark:hover:text-white hover:bg-purple-50/50 dark:hover:bg-purple-500/5'
                 }`}
               >
                 {label}

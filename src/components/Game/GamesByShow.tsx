@@ -45,9 +45,10 @@ export default function GamesByShow() {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
       {/* ===== SHOW NAVIGATION ===== */}
-      <div className="sticky top-16 z-50 backdrop-blur-md py-3 mb-12 flex flex-wrap gap-4 justify-center  ">
+      <div className="sticky top-16 z-50 backdrop-blur-md py-3 mb-12 flex flex-wrap gap-4 justify-center">
         {shows.map((show) => {
           const isSelected = selectedId === `show-${show.ID}`
+
           return (
             <button
               key={show.ID}
@@ -57,8 +58,17 @@ export default function GamesByShow() {
           cursor-pointer
           ${
             isSelected
-              ? 'bg-purple-600/80 text-white border-2 border-purple-500 ring-2 ring-purple-400'
-              : 'bg-purple-600/50 text-white hover:bg-purple-700/70'
+              ? `
+                bg-purple-600 text-white
+                border border-purple-600
+                ring-2 ring-purple-300
+                dark:bg-purple-500 dark:border-purple-500 dark:ring-purple-400
+              `
+              : `
+                bg-purple-100 text-purple-800
+                hover:bg-purple-200
+                dark:bg-purple-600/50 dark:text-white dark:hover:bg-purple-700/70
+              `
           }
           ${!isSelected && 'hover:scale-105'}
         `}
