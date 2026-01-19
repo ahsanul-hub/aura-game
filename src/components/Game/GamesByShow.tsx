@@ -45,7 +45,15 @@ export default function GamesByShow() {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
       {/* ===== SHOW NAVIGATION ===== */}
-      <div className="sticky top-16 z-50 backdrop-blur-md py-3 mb-12 flex flex-wrap gap-4 justify-center">
+      <div
+        className="
+    sticky top-14 md:top-16 z-30
+    py-2 md:py-3
+    mb-8 md:mb-12
+    flex flex-wrap gap-2 md:gap-4
+    justify-center
+  "
+      >
         {shows.map((show) => {
           const isSelected = selectedId === `show-${show.ID}`
 
@@ -54,23 +62,35 @@ export default function GamesByShow() {
               key={show.ID}
               onClick={() => scrollToSection(`show-${show.ID}`)}
               className={`
-          px-4 py-2 rounded-full text-sm font-medium transition
+          px-3 md:px-4
+          py-1.5 md:py-2
+          rounded-full
+          text-xs md:text-sm
+          font-semibold
+          transition-all duration-200
           cursor-pointer
+          shadow-sm
           ${
             isSelected
               ? `
-                bg-purple-600 text-white
-                border border-purple-600
-                ring-2 ring-purple-300
+                bg-purple-700
+                text-white
+                border border-purple-700
+                ring-2 ring-purple-400
+                shadow-purple-500/40
                 dark:bg-purple-500 dark:border-purple-500 dark:ring-purple-400
               `
               : `
-                bg-purple-100 text-purple-800
-                hover:bg-purple-200
-                dark:bg-purple-600/50 dark:text-white dark:hover:bg-purple-700/70
+                bg-purple-200
+                text-purple-900
+                hover:bg-purple-300
+                hover:text-purple-950
+                dark:bg-purple-600
+                dark:text-white
+                dark:hover:bg-purple-700
               `
           }
-          ${!isSelected && 'hover:scale-105'}
+          ${!isSelected && 'hover:scale-[1.05]'}
         `}
             >
               {show.Name}

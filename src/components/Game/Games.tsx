@@ -56,7 +56,7 @@ export function Games() {
   }, [dataCategory, t])
 
   return (
-    <div className="min-h-screen pt-20 pb-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen mt-6 px-4 sm:px-6 lg:px-8">
       {/* Search and Filters */}
       <div className="max-w-7xl mx-auto mb-12 space-y-6">
         <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
