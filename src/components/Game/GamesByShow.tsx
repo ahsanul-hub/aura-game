@@ -50,8 +50,11 @@ export default function GamesByShow() {
     sticky top-14 md:top-16 z-30
     py-2 md:py-3
     mb-8 md:mb-12
-    flex flex-wrap gap-2 md:gap-4
-    justify-center
+    flex md:flex-wrap
+    gap-2 md:gap-4
+    justify-start md:justify-center
+    overflow-x-auto md:overflow-visible
+    scrollbar-thin scrollbar-thumb-purple-400 scrollbar-track-purple-100
   "
       >
         {shows.map((show) => {
@@ -62,6 +65,7 @@ export default function GamesByShow() {
               key={show.ID}
               onClick={() => scrollToSection(`show-${show.ID}`)}
               className={`
+          flex-shrink-0
           px-3 md:px-4
           py-1.5 md:py-2
           rounded-full
@@ -122,7 +126,7 @@ export default function GamesByShow() {
                   key={game.ID}
                   href={`/${locale}/games/${game.Slug}`}
                   className="group relative rounded-2xl overflow-hidden
-                    bg-black border border-white/10
+                    dark:bg-black border border-white/10
                     hover:border-purple-500/60
                     hover:shadow-lg hover:shadow-purple-500/20
                     transition-all duration-300"

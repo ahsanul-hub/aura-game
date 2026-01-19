@@ -14,14 +14,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-6 group">
-              <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 rounded-lg group-hover:scale-110 transition-transform">
-                <Gamepad2 className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-gray-900 dark:text-white text-xl font-bold">
-                Pakar<span className="text-purple-600 dark:text-purple-400">Gaming</span>
-              </span>
+            <Link href="/" className="flex  gap-2 sm:gap-3">
+              <img
+                alt="Logo"
+                className='object-contain mb-5 w-48 sm:w-48'
+                src="https://s3.nevaobjects.id/image-dev/uploads/20260119165921.png"
+              />
             </Link>
+
             <p className="text-gray-600 dark:text-gray-400 mb-6">{t('about')}</p>
             <div className="flex gap-4">
               {[Facebook, Twitter, Instagram, Youtube].map((Icon, i) => (
@@ -66,8 +66,8 @@ export function Footer() {
               <li className="flex items-start gap-3 text-gray-600 dark:text-gray-400">
                 <MapPin className="w-5 h-5 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-1" />
                 <span>
-                  Jl. Damai 1 No.11, RT.7/RW.01, Cipete Utara, Kec. Kby. Baru, Kota Jakarta,
-                  Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12150
+                  Jl. Damai 1 No.11, RT.7/RW.01, Cipete Utara, Kec. Kby. Baru, Kota Jakarta, Jakarta
+                  Selatan, Daerah Khusus Ibukota Jakarta 12150
                 </span>
               </li>
               <li className="flex items-center gap-3 text-gray-600 dark:text-gray-400">

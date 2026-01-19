@@ -104,11 +104,12 @@ export function Navigation() {
       <nav className="border-b border-purple-500/30 dark:border-purple-500/20 bg-white dark:bg-black/20 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
-            <Link href="/" className="flex items-center gap-1.5 sm:gap-2">
-              <Gamepad2 className="w-7 h-7 sm:w-8 sm:h-8 text-purple-500 dark:text-purple-500 flex-shrink-0" />
-              <span className="text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-600 whitespace-nowrap">
-                PakarGaming
-              </span>
+            <Link href="/" className="flex items-center gap-2 sm:gap-3">
+              <img
+                src="https://s3.nevaobjects.id/image-dev/uploads/20260119165921.png"
+                alt="Logo"
+                className="object-contain w-48" 
+              />
             </Link>
 
             {/* Desktop Navigation */}
