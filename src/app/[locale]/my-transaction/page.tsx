@@ -29,11 +29,8 @@ export default function MyTransaction() {
   const meta = data?.meta
 
   return (
-    <div
-      className="min-h-screen pt-20 pb-12 px-4 sm:px-6 lg:px-8
-                bg-purple-50 dark:bg-purple-950"
-    >
-      <h1 className="text-2xl font-semibold mb-6">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-purple-50/50 dark:via-purple-900/50 to-background p-5">
+      <h1 className="text-2xl font-semibold mb-6 flex items-center justify-center w-full mt-5">
         My <span className="text-purple-600 dark:text-purple-400">Transaction</span>
       </h1>
 

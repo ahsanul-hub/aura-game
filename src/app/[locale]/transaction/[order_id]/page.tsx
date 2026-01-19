@@ -45,7 +45,8 @@ export default function TransactionStatusPage() {
       desc: 'Top up berhasil dan item sudah masuk ke akun kamu',
       button: 'Kembali ke Beranda',
       btnClass: `
-    bg-emerald-500/10 text-emerald-600
+      bg-emerald-500 
+    dark:bg-emerald-500 dark:text-white
     hover:bg-emerald-500 hover:text-white
     border border-emerald-500/30
   `,
@@ -56,7 +57,8 @@ export default function TransactionStatusPage() {
       desc: 'Transaksi gagal atau telah kedaluwarsa',
       button: 'Ulangi Transaksi',
       btnClass: `
-    bg-rose-500/10 text-rose-600
+    bg-rose-500
+ text-rose-600
     hover:bg-rose-500 hover:text-white
     border border-rose-500/30
   `,
