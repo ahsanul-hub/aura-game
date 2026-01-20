@@ -22,10 +22,13 @@ export default function DetailTransactionPage() {
     <div className="min-h-screen bg-gradient-to-br from-background via-purple-50/40 dark:via-purple-900/40 to-background flex items-center justify-center px-4 py-10">
       {/* Main Container */}
       <div className="flex flex-col">
-        <TransactionTracking />
-        <ProductDetailCard data={dataTrx} />
-
-        <PaymentDetailCard data={dataTrx} />
+        <div className="flex flex-col sm:flex-row gap-5">
+          <TransactionTracking data={dataTrx} />
+          <div className="sm:w-[640px] flex gap-4 flex-col flex-shrink">
+            <ProductDetailCard data={dataTrx} />
+            <PaymentDetailCard data={dataTrx} />
+          </div>
+        </div>
       </div>
     </div>
   )

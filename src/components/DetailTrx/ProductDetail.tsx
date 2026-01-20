@@ -7,7 +7,7 @@ type ProductDetailCardProps = {
 
 export default function ProductDetailCard({ data }: ProductDetailCardProps) {
   return (
-    <div className="w-full max-w-3xl mx-auto px-4 mt-4">
+    <div className="w-full max-w-3xl">
       <div className="rounded-2xl border border-gray-200 bg-white px-4 py-4 shadow-sm">
         {/* Title */}
         <h2 className="mb-4 text-sm font-semibold text-gray-900">Detail Produk</h2>

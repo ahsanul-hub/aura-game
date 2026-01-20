@@ -66,6 +66,7 @@ export interface DetailProduct {
   email: string
   category: string
   payment_image: string
+  game_slug: string
 }
 
 export interface PaymentGuide {
