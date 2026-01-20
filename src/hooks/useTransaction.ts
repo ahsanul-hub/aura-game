@@ -1,6 +1,9 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { api } from '../api/axios'
-import { GetTransactionResponse, GetTransactionResponses } from '../types/Transaction'
+import {
+  GetTransactionResponses,
+  GetTransactionResponseWithDetailProduct,
+} from '../types/Transaction'
 import { toast } from 'sonner'
 import axios from 'axios'
 
@@ -17,7 +20,7 @@ export function useCreateTransaction() {
 }
 
 export function useGetTransaction(id: string) {
-  const { data, isLoading } = useQuery<GetTransactionResponse>({
+  const { data, isLoading } = useQuery<GetTransactionResponseWithDetailProduct>({
     queryKey: ['get-transaction-detail', id],
     queryFn: async () => {
       const res = await api.get(`/v1/transactions/${id}`)
