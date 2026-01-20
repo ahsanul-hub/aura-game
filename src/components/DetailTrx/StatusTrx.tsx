@@ -31,7 +31,11 @@ export default function TransactionStatusCard({ data }: TransactionStatusCardPro
   const cfg = statusConfig[data.status] || statusConfig.PENDING
 
   const paymentChannel = data.payment_channel?.toLowerCase()
-  const isWallet = paymentChannel === 'shopeepay' || paymentChannel === 'gopay' ||  paymentChannel === 'dana'
+  const isWallet =
+    paymentChannel === 'shopeepay' ||
+    paymentChannel === 'gopay' ||
+    paymentChannel === 'dana' ||
+    paymentChannel === 'ovo'
   const isQRIS = !!(data.qr_code_url || data.qr_string)
 
   return (
@@ -60,55 +64,67 @@ export default function TransactionStatusCard({ data }: TransactionStatusCardPro
         {data.status === 'PENDING' && (
           <>
             {isWallet && data.payment_url ? (
-              <a
-                href={data.payment_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-    mt-4 w-full rounded-2xl
-    bg-gradient-to-r from-pink-500 to-purple-600
-    py-3 text-sm font-semibold text-white
-    shadow-md hover:shadow-lg
-    hover:from-pink-600 hover:to-purple-700
-    active:scale-95
-    transition-all duration-200
-    flex justify-center items-center
-  "
-              >
-                Lanjutkan Pembayaran
-              </a>
+              <>
+                {/* Instruction khusus OVO */}
+                {paymentChannel === 'ovo' ? (
+                  <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center">
+                    Bayar lewat aplikasi OVO
+                  </p>
+                ) : (
+                  <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center">
+                    Bayar menggunakan {data.payment_channel}
+                  </p>
+                )}
+
+                <a
+                  href={data.payment_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+            mt-4 w-full rounded-2xl
+            bg-gradient-to-r from-pink-500 to-purple-600
+            py-3 text-sm font-semibold text-white
+            shadow-md hover:shadow-lg
+            hover:from-pink-600 hover:to-purple-700
+            active:scale-95
+            transition-all duration-200
+            flex justify-center items-center
+          "
+                >
+                  Lanjutkan Pembayaran
+                </a>
+              </>
             ) : isQRIS ? (
               <>
-                {/* Payment Channel */}
-                <p className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                {/* QRIS Section */}
+                <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center">
                   Bayar menggunakan {data.payment_channel}
                 </p>
 
-                {/* QR Code */}
                 <img
                   src={data.qr_code_url || data.qr_string}
                   alt="QR Code"
                   className="h-40 w-40 object-contain rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm"
                 />
 
-                {/* Instruction */}
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
                   Scan QR code ini menggunakan aplikasi {data.payment_channel} untuk menyelesaikan
                   pembayaran
                 </p>
+
                 <a
                   href={data.qr_code_url || data.qr_string}
                   download={`QR-${data.payment_channel}.png`}
                   className="
-        mt-2 w-full inline-flex justify-center items-center
-        rounded-2xl
-        bg-gradient-to-r from-purple-500 to-pink-500
-        py-2 text-sm font-semibold text-white
-        shadow-md hover:shadow-lg
-        hover:from-purple-600 hover:to-pink-600
-        active:scale-95
-        transition-all duration-200
-      "
+            mt-2 w-full inline-flex justify-center items-center
+            rounded-2xl
+            bg-gradient-to-r from-purple-500 to-pink-500
+            py-2 text-sm font-semibold text-white
+            shadow-md hover:shadow-lg
+            hover:from-purple-600 hover:to-pink-600
+            active:scale-95
+            transition-all duration-200
+          "
                 >
                   Download QR
                 </a>
