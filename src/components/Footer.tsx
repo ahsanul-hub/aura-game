@@ -18,7 +18,7 @@ export function Footer() {
               <img
                 alt="Logo"
                 className='object-contain mb-5 w-48 sm:w-48'
-                src="https://s3.nevaobjects.id/image-dev/uploads/20260119165921.png"
+                src="https://s3.nevaobjects.id/image-dev/uploads/20260121141804.png"
               />
             </Link>
 

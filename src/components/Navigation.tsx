@@ -106,7 +106,7 @@ export function Navigation() {
           <div className="flex items-center justify-between h-14 sm:h-16">
             <Link href="/" className="flex items-center gap-2 sm:gap-3">
               <img
-                src="https://s3.nevaobjects.id/image-dev/uploads/20260119165921.png"
+                src="https://s3.nevaobjects.id/image-dev/uploads/20260121141804.png"
                 alt="Logo"
                 className="object-contain w-48" 
               />
