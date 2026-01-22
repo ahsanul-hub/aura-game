@@ -1,28 +1,49 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { Search } from 'lucide-react'
 import { useDebounce } from 'use-debounce'
 import { useGetGameBySearch } from '../../hooks/useGame'
+import { Link } from '../../i18n/routing'
 
 export default function SearchComponent() {
   const [keyword, setKeyword] = useState('')
   const [debouncedKeyword] = useDebounce(keyword, 400)
+  const [open, setOpen] = useState(false)
 
   const { data, isLoading } = useGetGameBySearch(debouncedKeyword)
   const games = data?.data ?? []
 
   return (
-    <div className="relative w-92">
+    <div
+      className={`
+    relative transition-all duration-300
+    w-12
+    ${open ? 'w-72' : 'w-12'}
+    lg:!w-92
+  `}
+    >
       {/* INPUT */}
       <div className="flex items-center h-10 px-3 rounded-full border border-purple-500/30 bg-white dark:bg-black/30 shadow-sm">
-        <Search size={18} className="text-purple-600 dark:text-purple-400 shrink-0" />
+        <Search
+          size={18}
+          className="text-purple-600 dark:text-purple-400 shrink-0 cursor-pointer"
+          onClick={() => setOpen(true)}
+        />
         <input
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
+          onFocus={() => setOpen(true)}
+          onBlur={() => {
+            if (!keyword) setOpen(false)
+          }}
           placeholder="Search Game..."
-          className="ml-2 w-full bg-transparent text-sm outline-none"
+          className={`
+    ml-2 w-full bg-transparent text-sm outline-none
+    transition-all duration-300
+    ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}
+    sm:opacity-100 sm:pointer-events-auto
+  `}
         />
       </div>
 
@@ -61,6 +82,7 @@ export default function SearchComponent() {
             <div className="max-h-96 overflow-y-auto">
               {games.slice(0, 5).map((game) => (
                 <Link
+                  onClick={() => setKeyword('')}
                   key={game.id}
                   href={`/games/${game.slug}`}
                   className="flex items-center gap-3 px-4 py-3 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 dark:hover:from-purple-900/20 dark:hover:to-pink-900/20 transition-all duration-200 border-b border-gray-100 dark:border-gray-800 last:border-b-0 group"
