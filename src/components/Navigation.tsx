@@ -26,7 +26,7 @@ export function Navigation() {
     return () => window.removeEventListener('click', handler)
   }, [])
 
-  const navLinks = [{ path: '/my-transaction', label: t('transaction'), auth: true }]
+  const navLinks = [{ path: '/en/my-transaction', label: t('transaction'), auth: true }]
   const visibleNavLinks = navLinks.filter((link) => !link.auth || user)
 
   if (loading) {

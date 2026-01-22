@@ -1,9 +1,9 @@
 'use client'
 
-import useAuth from '../../../components/Navigation'
 import { useGetTransactionByEmail } from '../../../hooks/useTransaction'
 import { useRouter, useParams } from 'next/navigation'
 import { useState } from 'react'
+import useAuth from '../../../hooks/useAuth'
 
 export default function MyTransaction() {
   const { user, loading } = useAuth()
