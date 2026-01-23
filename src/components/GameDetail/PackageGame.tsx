@@ -53,7 +53,7 @@ export default function PackageGame({
           Pilih Nominal Top Up
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
           {PackageGame?.data?.product.map((pkg) => {
             const isSelected = activePackage?.id === pkg.id
 
@@ -82,12 +82,15 @@ export default function PackageGame({
                 <div className="flex mb-1 justify-center items-center">
                   <div className="relative w-full max-w-[100px] aspect-[4/5] flex justify-center items-center">
                     <Image
-                      src={pkg.image || 'https://picsum.photos/id/1/200/300'}
+                      src={
+                        pkg.image ||
+                        'https://s3.nevaobjects.id/image-dev/uploads/20260123164455.webp'
+                      }
                       alt="img-product"
-                      fill
+                      width={50}
+                      height={50}
                       className="object-contain"
                       style={{ objectPosition: 'center' }} // pastikan object di tengah
-                      sizes="100px"
                     />
                   </div>
                 </div>

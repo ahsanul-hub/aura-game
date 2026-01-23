@@ -2,7 +2,7 @@
 import { useParams, useRouter } from 'next/navigation'
 import { useGetGamesBySlug } from '../../hooks/useGame'
 import { useState, useRef, useEffect } from 'react'
-import { GameDetailSkeleton } from '../../components/GameDetailSkeleton'
+import { GameDetailSpinner } from './GameDetailSkeleton'
 import { useGetPaymentMethod } from '../../hooks/usePaymentMethod'
 import { Price } from '../../types/Game'
 import { PaymentMethod } from '../../types/PaymentMethod'
@@ -150,7 +150,7 @@ export function GameDetailComponent() {
   }
 
   if (isLoadingGameDetail || !dataGameDetail || isLoadingPaymentMethods || !dataPaymentMethods) {
-    return <GameDetailSkeleton />
+    return <GameDetailSpinner />
   }
 
   const packageError = errors.package?.product_id?.message

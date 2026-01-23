@@ -5,8 +5,15 @@ export function GamesByShowSkeleton() {
       {[...Array(1)].map((_, i) => (
         <div key={i}>
           {/* HEADER */}
-          <div className="mb-8">
-            <div className="h-7 w-48 rounded-md bg-gray-200 dark:bg-white/10" />
+          <div className="mb-6 sm:mb-8">
+            <div
+              className="
+      h-5 sm:h-7
+      w-32 sm:w-48
+      rounded-md
+      bg-gray-200 dark:bg-white/10
+    "
+            />
           </div>
 
           {/* GAMES */}
