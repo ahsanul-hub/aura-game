@@ -14,7 +14,7 @@ export const orderSchema = z.object({
     payment_channel: z.string().min(1),
   }),
   provider_id: z.string().min(1),
-  game_id: z.string().min(1),
+  game_id: z.string().min(1).optional(),
   amount: z.int(),
   code: z.string(),
 })

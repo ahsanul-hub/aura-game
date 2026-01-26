@@ -1,6 +1,6 @@
 'use client'
 import { ShoppingCart } from 'lucide-react'
-import { Price } from '../../types/Game'
+import { GetGameResponse, Price } from '../../types/Game'
 import { PaymentMethod } from '../../types/PaymentMethod'
 import { OrderFormValues } from '../../schemas/order_schema'
 import { useCheckID } from '../../hooks/useTransaction'
@@ -13,6 +13,7 @@ interface OrderSummaryProps {
   orderFormValue: OrderFormValues
   category_code: string
   setAccount: (account: string) => void
+  InputGame: GetGameResponse
 }
 
 export default function OrderSummary({
@@ -23,13 +24,20 @@ export default function OrderSummary({
   orderFormValue,
   category_code,
   setAccount,
+  InputGame,
 }: // gameInput,
 OrderSummaryProps) {
-  const { mutateAsync, isPending } = useCheckID()
+  const hasGameInputs = InputGame?.data?.input?.length > 0
+
+  const { mutateAsync: CheckID, isPending } = useCheckID()
 
   const handleBuyNow = async () => {
     try {
-      const res = await mutateAsync({
+      if (!hasGameInputs) {
+        onSubmit()
+        return
+      }
+      const res = await CheckID({
         category_code,
         game_id: orderFormValue.game_id,
         provider_id: orderFormValue.provider_id,

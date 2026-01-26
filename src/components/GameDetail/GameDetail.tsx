@@ -53,7 +53,6 @@ export function GameDetailComponent() {
   })
 
   const {
-    handleSubmit,
     setValue,
     formState: { errors },
   } = orderForm
@@ -204,6 +203,7 @@ export function GameDetailComponent() {
 
             <div className="hidden lg:block">
               <OrderSummary
+                InputGame={dataGameDetail}
                 setAccount={setAccount}
                 category_code={dataGameDetail.data.code}
                 orderFormValue={orderFormValue}
@@ -294,6 +294,7 @@ export function GameDetailComponent() {
 
             <div className="lg:hidden mt-6">
               <OrderSummary
+                InputGame={dataGameDetail}
                 setAccount={setAccount}
                 category_code={dataGameDetail.data.code}
                 orderFormValue={orderFormValue}

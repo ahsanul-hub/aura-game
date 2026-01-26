@@ -101,10 +101,12 @@ export default function OrderDetailModal({
               Rp. {formatPrice(packageData.selling_price)}
             </span>
           </div>
-          <div className="flex justify-between text-base">
-            <span className="font-semibold">Account</span>
-            <span className="font-bold text-purple-600">{Account}</span>
-          </div>
+          {Account && (
+            <div className="flex justify-between text-base">
+              <span className="font-semibold">Account</span>
+              <span className="font-bold text-purple-600">{Account}</span>
+            </div>
+          )}
         </div>
 
         {/* Action */}
