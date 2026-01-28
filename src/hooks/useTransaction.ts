@@ -26,8 +26,8 @@ export function useGetTransaction(id: string) {
       const res = await api.get(`/v1/transactions/${id}`)
       return res.data
     },
-    refetchInterval : 5000,
-    refetchIntervalInBackground : true,
+    refetchInterval: 5000,
+    refetchIntervalInBackground: true,
   })
 
   return { data, isLoading }
@@ -66,9 +66,8 @@ export function useCheckID() {
       if (axios.isAxiosError(error)) {
         const status = error.response?.status
         const message = error.response?.data?.message || error.response?.data?.error
-
         if (status === 400) {
-          toast.error(message || 'Akun tidak ditemukan')
+          toast.error('Account Not Found')
           return
         }
       }

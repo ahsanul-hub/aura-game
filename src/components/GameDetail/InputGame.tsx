@@ -77,23 +77,47 @@ export default function InputGame({ InputGame, control, errors }: InputProps) {
                       {input.required && <span className="text-red-500 ml-1">*</span>}
                     </label>
 
-                    <input
-                      {...field}
-                      type={input.input_type}
-                      placeholder={input.placeholder}
-                      className="
-                        w-full px-4 py-3 rounded-2xl
-                        bg-white dark:bg-white/20
-                        border border-gray-300 dark:border-white/30
-                        text-gray-900 dark:text-white
-                        placeholder-gray-400 dark:placeholder-purple-300
-                        focus:outline-none
-                        focus:border-purple-500
-                        focus:bg-white dark:focus:bg-white/30
-                        transition-all
-                        text-sm
-                      "
-                    />
+                    {input.input_type === 'dropdown' ? (
+                      <select
+                        {...field}
+                        className="
+          w-full px-4 py-3 rounded-2xl
+          bg-white dark:bg-white/20
+          border border-gray-300 dark:border-white/30
+          text-gray-900 dark:text-white
+          focus:outline-none
+          focus:border-purple-500
+          transition-all
+          text-sm
+        "
+                      >
+                        <option value="">Pilih Server</option>
+                        {input.Options?.map((opt, i) => (
+                          <option key={i} value={opt.value}>
+                            {opt.name}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        {...field}
+                        type={input.input_type}
+                        placeholder={input.placeholder}
+                        className="
+          w-full px-4 py-3 rounded-2xl
+          bg-white dark:bg-white/20
+          border border-gray-300 dark:border-white/30
+          text-gray-900 dark:text-white
+          placeholder-gray-400 dark:placeholder-purple-300
+          focus:outline-none
+          focus:border-purple-500
+          focus:bg-white dark:focus:bg-white/30
+          transition-all
+          text-sm
+        "
+                      />
+                    )}
+
                     {errors?.game_data?.[input.key] && (
                       <div className="mt-2 flex items-start gap-2 rounded-lg bg-red-50 dark:bg-red-500/10 px-3 py-2 text-xs text-red-600 dark:text-red-400">
                         <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />

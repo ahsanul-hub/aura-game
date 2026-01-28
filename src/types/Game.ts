@@ -23,17 +23,31 @@ export interface Game {
   category: Category
 }
 
+export interface GameInputOption {
+  name: string
+  value: string
+}
 export interface GameInput {
   id: string
   game_id: string
   key: string
   label: string
-  input_type: 'text' | 'number' | string
+  input_type: GameInputType
   required: boolean
   sort_order: number
   placeholder: string
+  Options: GameInputOption[] | null
 }
 
+export type GameInputType =
+  | 'text'
+  | 'number'
+  | 'tel'
+  | 'email'
+  | 'password'
+  | 'dropdown'
+  | 'date'
+  | 'textarea'
 export interface Price {
   id: string
   image: string
