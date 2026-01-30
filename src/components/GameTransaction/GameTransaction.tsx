@@ -15,6 +15,7 @@ import PaymentMethodTransactionComponent from './components/PaymentMethod'
 import ContactForm from './components/Contact'
 import OrderTransactionComponent from './components/OrderTransaction'
 import HelpCard from './components/Help'
+import MobileOrderBar from './components/MobileOrderTransaction'
 
 export default function GameTransaction() {
   const { slug } = useParams<{ slug: string }>()
@@ -32,7 +33,9 @@ export default function GameTransaction() {
   }
 
   const sections: ReactElement[] = [
-    ...(inputs.length > 0 ? [<AccountComponent game={dataGameDetail.data} key="account" gameData={inputs} />] : []),
+    ...(inputs.length > 0
+      ? [<AccountComponent game={dataGameDetail.data} key="account" gameData={inputs} />]
+      : []),
 
     <ProductComponent key="product" game={dataGameDetail} activeProduct={activeProduct} />,
     <PaymentMethodTransactionComponent
@@ -59,6 +62,7 @@ export default function GameTransaction() {
           <OrderTransactionComponent />
         </div>
       </LayoutData>
+      <MobileOrderBar />
     </LayoutGamesTransaction>
   )
 }

@@ -3,7 +3,7 @@ import { ShoppingCart } from 'lucide-react'
 
 export default function OrderSummary() {
   return (
-    <div className=" relative w-full xl:w-100 xl:self-start bg-black/5 mt-5 dark:bg-white/10  rounded-3xl p-4 sm:p-6 border border-purple-500/30 hover:border-purple-500 transition-all duration-300 shadow-xl">
+    <div className="hidden xl:block relative w-full xl:w-100 xl:self-start bg-black/5 mt-5 dark:bg-white/10  rounded-3xl p-4 sm:p-6 border border-purple-500/30 hover:border-purple-500 transition-all duration-300 shadow-xl">
       <h2 className="text-base font-bold text-gray-900 dark:text-white mb-4">Ringkasan Pesanan : </h2>
 
       {/* Info */}

@@ -10,9 +10,6 @@ export function Home() {
       <BannerComponent />
       {/* Game Show  */}
       <GamesByShow />
-
-      {/* Stats Section
-      <Stats /> */}
     </div>
   )
 }
