@@ -48,6 +48,7 @@ export type GameInputType =
   | 'dropdown'
   | 'date'
   | 'textarea'
+  
 export interface Price {
   id: string
   image: string

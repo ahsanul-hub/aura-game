@@ -6,7 +6,7 @@ import LayoutGamesTransaction from './components/Layout'
 import BannerGameTransaction from './components/Banner'
 import AccountComponent from './components/Account'
 import LayoutData from './components/LayoutData'
-import { cloneElement, ReactElement, useState } from 'react'
+import { cloneElement, ReactElement, useEffect, useState } from 'react'
 import { ProductComponent } from './components/Product'
 import { Price } from '../../types/Game'
 import { PaymentMethod } from '../../types/PaymentMethod'
@@ -16,33 +16,79 @@ import ContactForm from './components/Contact'
 import OrderTransactionComponent from './components/OrderTransaction'
 import HelpCard from './components/Help'
 import MobileOrderBar from './components/MobileOrderTransaction'
+import { useCreateTransactionV2 } from './hooks/useCreateTransaction'
 
 export default function GameTransaction() {
   const { slug } = useParams<{ slug: string }>()
   const [selectedPackage, setSelectedPackage] = useState<Price | null>(null)
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod>(null)
+  const [email, setSelectedEmail] = useState<string>(null)
+  const [account, setSelectedAccount] = useState<Record<string, any> | null>(null)
+
   const { data: dataPaymentMethods, isLoading: isLoadingPaymentMethods } = useGetPaymentMethod()
+  const { data: dataGameDetail, isLoading: isLoadingGameDetail } = useGetGamesBySlug(slug)
+
+  const { mutate } = useCreateTransactionV2()
 
   const activeProduct = selectedPackage ?? null
   const activePayment = selectedPayment ?? null
-  const { data: dataGameDetail, isLoading: isLoadingGameDetail } = useGetGamesBySlug(slug)
+
   const inputs = dataGameDetail?.data?.input || []
 
   if (isLoadingGameDetail) {
     return <SpinnerGameTransaction />
   }
 
+  const handleCreateOrder = () => {
+    if (!account || !selectedPackage || !selectedPayment || !email) {
+      alert('Lengkapi data dulu')
+      return
+    }
+
+    mutate({
+      game_id: dataGameDetail.data.id,
+      package: {
+        product_id: selectedPackage.id,
+        product_name: selectedPackage.name,
+        product_sku: selectedPackage.sku,
+      },
+      payment: {
+        payment_method_id: selectedPayment.id,
+        payment_channel: selectedPayment.name,
+      },
+      email: email,
+      game_data: account,
+      amount: selectedPackage.selling_price,
+      provider_id: dataGameDetail.data.provider_id,
+    })
+  }
+
   const sections: ReactElement[] = [
     ...(inputs.length > 0
-      ? [<AccountComponent game={dataGameDetail.data} key="account" gameData={inputs} />]
+      ? [
+          <AccountComponent
+            account={account}
+            setAccount={setSelectedAccount}
+            game={dataGameDetail.data}
+            key="account"
+            gameData={inputs}
+          />,
+        ]
       : []),
 
-    <ProductComponent key="product" game={dataGameDetail} activeProduct={activeProduct} />,
+    <ProductComponent
+      setSelectedPackage={setSelectedPackage}
+      key="product"
+      game={dataGameDetail}
+      activeProduct={activeProduct}
+    />,
     <PaymentMethodTransactionComponent
+      ActiveProduct={activeProduct}
+      setSelectedPaymentMethod={setSelectedPayment}
       PaymentMethod={dataPaymentMethods}
       activePayment={activePayment}
     />,
-    <ContactForm />,
+    <ContactForm setSelectedEmail={setSelectedEmail} />,
   ]
 
   return (
@@ -57,12 +103,17 @@ export default function GameTransaction() {
             })
           )}
         </div>
+        
         <div className="flex items-center flex-col ">
           <HelpCard />
-          <OrderTransactionComponent />
+          <OrderTransactionComponent
+            onSubmit={handleCreateOrder}
+            Payment={activePayment}
+            Product={activeProduct}
+          />
         </div>
       </LayoutData>
-      <MobileOrderBar />
+      <MobileOrderBar Payment={activePayment} Product={activeProduct} onSubmit={handleCreateOrder} />
     </LayoutGamesTransaction>
   )
 }

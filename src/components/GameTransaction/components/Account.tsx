@@ -4,20 +4,26 @@ import { useEffect, useRef } from 'react'
 import { GameDetail, GameInput } from '../../../types/Game'
 import { useCheckIDV2 } from '../hooks/useCheckID'
 
+type DynamicAccount = Record<string, any>
+
 interface AccountCardProps {
   gameData: GameInput[]
   step?: number
   game: GameDetail
+  setAccount: React.Dispatch<React.SetStateAction<DynamicAccount | null>>
+  account: DynamicAccount
 }
 
-export default function AccountCard({ gameData, step = 1, game }: AccountCardProps) {
+export default function AccountCard({
+  gameData,
+  step = 1,
+  game,
+  setAccount,
+  account,
+}: AccountCardProps) {
   const { mutate, isPending, data } = useCheckIDV2()
 
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = useForm<Record<string, string>>({
+  const { register, watch } = useForm<Record<string, string>>({
     mode: 'onChange',
   })
 
@@ -25,6 +31,15 @@ export default function AccountCard({ gameData, step = 1, game }: AccountCardPro
 
   const hasCheckedRef = useRef(false)
   const lastPayloadRef = useRef<string>('')
+
+  useEffect(() => {
+    if (data?.username) {
+      const newAccount = {
+        ...values,
+      }
+      setAccount(newAccount)
+    }
+  }, [data])
 
   useEffect(() => {
     const requiredFilled = gameData.filter((g) => g.required).every((g) => values[g.key])
@@ -53,7 +68,7 @@ export default function AccountCard({ gameData, step = 1, game }: AccountCardPro
     }, 700)
 
     return () => clearTimeout(t)
-  }, [values, gameData, mutate])
+  }, [data, values, game.id, setAccount, account])
 
   return (
     <div className="relative w-full sm:w-150 ">
@@ -97,15 +112,10 @@ export default function AccountCard({ gameData, step = 1, game }: AccountCardPro
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-white/20 border border-purple-500/30 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-purple-300 text-sm outline-none transition-all duration-200 hover:border-purple-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:bg-white dark:focus:bg-white/30"
                   />
                 )}
-
-                {errors[input.key] && (
-                  <span className="text-red-500 text-xs mt-1">Wajib diisi</span>
-                )}
               </div>
             ))}
         </div>
 
-        {/* 🔥 CHECK ID STATUS */}
         {(isPending || data?.username) && (
           <div className="mt-4 flex items-center">
             {isPending && (

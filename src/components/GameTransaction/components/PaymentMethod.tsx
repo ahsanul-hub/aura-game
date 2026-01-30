@@ -3,17 +3,23 @@
 import { CheckCircle2 } from 'lucide-react'
 import { GetPaymentMethodResponse, PaymentMethod } from '../../../types/PaymentMethod'
 import Image from 'next/image'
+import { Price } from '../../../types/Game'
+import { formatPrice } from '../../../utils/format_price'
 
 interface PaymentMethodProps {
   PaymentMethod: GetPaymentMethodResponse
   activePayment: PaymentMethod | null
   step?: number
+  setSelectedPaymentMethod: React.Dispatch<React.SetStateAction<PaymentMethod | null>>
+  ActiveProduct: Price
 }
 
 export default function PaymentMethodTransactionComponent({
   PaymentMethod,
   activePayment,
   step,
+  ActiveProduct,
+  setSelectedPaymentMethod,
 }: PaymentMethodProps) {
   return (
     <div className="relative w-full sm:w-150 ">
@@ -35,6 +41,7 @@ export default function PaymentMethodTransactionComponent({
             return (
               <div
                 key={payment.id}
+                onClick={() => setSelectedPaymentMethod(payment)}
                 className={`
               relative cursor-pointer rounded-2xl p-3
               transition-all duration-300 
@@ -42,13 +49,13 @@ export default function PaymentMethodTransactionComponent({
               ${
                 isSelected
                   ? 'border-2 border-purple-500 bg-white dark:bg-white/20 shadow-md scale-[1.02]'
-                  : 'border border-purple-500/30 bg-white/80 dark:bg-white/20 hover:border-purple-500 hover:bg-white dark:hover:bg-white/30 hover:scale-[1.01]'
+                  : 'border border-purple-500/30 bg-white/80 dark:bg-white/20  dark:hover:bg-white/30 hover:scale-[1.01]'
               }
             `}
               >
                 {/* Selected Badge */}
                 {isSelected && (
-                  <div className="absolute -top-2 -right-2 bg-green-500 rounded-full p-1 shadow-md">
+                  <div className="absolute -top-2 -right-2 bg-purple-500 rounded-full p-1 shadow-md">
                     <CheckCircle2 className="w-4 h-4 text-white" />
                   </div>
                 )}
@@ -67,15 +74,17 @@ export default function PaymentMethodTransactionComponent({
                 </div>
 
                 {/* Name */}
-                <p className="text-gray-900 dark:text-white text-sm sm:text-sm font-medium leading-snug line-clamp-2 flex-1">
+                <p className="text-gray-900 dark:text-white text-sm xl:text-sm font-medium leading-snug line-clamp-2 flex-1">
                   {payment.full_name}
                 </p>
 
                 {/* Price */}
                 <div className="flex w-auto justify-end ">
-                  <p className="sm:text-sm font-semibold text-purple-600 dark:text-purple-400">
-                    Rp 500.000
-                  </p>
+                  {ActiveProduct?.selling_price && (
+                    <p className="xl:text-xs font-semibold text-purple-600 dark:text-purple-400">
+                      Rp {formatPrice(ActiveProduct.selling_price)}
+                    </p>
+                  )}
                 </div>
               </div>
             )

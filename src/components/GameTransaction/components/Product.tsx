@@ -9,9 +9,15 @@ interface ProductComponentProps {
   game: GetGameResponse
   activeProduct: Price | null
   step?: number
+  setSelectedPackage: React.Dispatch<React.SetStateAction<Price | null>>
 }
 
-export function ProductComponent({ game, activeProduct, step = 2 }: ProductComponentProps) {
+export function ProductComponent({
+  game,
+  activeProduct,
+  step = 2,
+  setSelectedPackage,
+}: ProductComponentProps) {
   return (
     <div className="relative w-full sm:w-150  ">
       {/* Step Badge */}
@@ -33,6 +39,7 @@ export function ProductComponent({ game, activeProduct, step = 2 }: ProductCompo
             return (
               <div
                 key={pkg.id}
+                onClick={() => setSelectedPackage(pkg)}
                 className={`
           relative cursor-pointer rounded-xl p-2
           transition-all duration-300
@@ -72,7 +79,7 @@ export function ProductComponent({ game, activeProduct, step = 2 }: ProductCompo
                   </div>
 
                   <p className="flex-1 text-xs  font-bold text-purple-600 dark:text-purple-400 text-center">
-                    Rp {formatPrice(pkg.selling_price)}
+                    Rp {formatPrice(pkg?.selling_price)}
                   </p>
                 </div>
               </div>
