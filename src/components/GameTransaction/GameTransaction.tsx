@@ -11,6 +11,10 @@ import { ProductComponent } from './Product'
 import { Price } from '../../types/Game'
 import { PaymentMethod } from '../../types/PaymentMethod'
 import { useGetPaymentMethod } from '../../hooks/usePaymentMethod'
+import PaymentMethodTransactionComponent from './PaymentMethod'
+import ContactForm from './Contact'
+import OrderTransactionComponent from './OrderTransaction'
+import HelpCard from './Help'
 
 export default function GameTransaction() {
   const { slug } = useParams<{ slug: string }>()
@@ -31,6 +35,11 @@ export default function GameTransaction() {
     ...(inputs.length > 0 ? [<AccountComponent key="account" gameData={inputs} />] : []),
 
     <ProductComponent key="product" game={dataGameDetail} activeProduct={activeProduct} />,
+    <PaymentMethodTransactionComponent
+      PaymentMethod={dataPaymentMethods}
+      activePayment={activePayment}
+    />,
+    <ContactForm />,
   ]
 
   return (
@@ -44,6 +53,10 @@ export default function GameTransaction() {
               key: `section-${i}`,
             })
           )}
+        </div>
+        <div className="flex items-center flex-col ">
+          <HelpCard />
+          <OrderTransactionComponent />
         </div>
       </LayoutData>
     </LayoutGamesTransaction>

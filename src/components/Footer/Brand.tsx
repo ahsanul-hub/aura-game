@@ -42,7 +42,7 @@ export default function BrandComponent() {
         </a>
 
         <a
-          href="https://wa.me/62XXXXXXXXXX"
+          href="https://wa.me/628131793708"
           target="_blank"
           rel="noopener noreferrer"
           className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-500/10 flex items-center justify-center text-green-600 dark:text-green-400 hover:bg-green-500 hover:text-white transition-all duration-300"

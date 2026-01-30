@@ -17,7 +17,7 @@ export default function ContactComponent() {
         </li>
         <li className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
           <Phone className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-          <span>+6208131793708</span>
+          <span>+628131793708</span>
         </li>
         <li className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
           <Mail className="w-5 h-5 text-purple-600 dark:text-purple-400" />

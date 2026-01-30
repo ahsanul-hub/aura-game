@@ -8,7 +8,7 @@ interface AccountCardProps {
 
 export default function AccountCard({ gameData, step = 1 }: AccountCardProps) {
   return (
-    <div className="relative w-[350px] sm:w-150 mt-5 ">
+    <div className="relative w-full sm:w-150 ">
       {/* Step Badge */}
       <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-md border-2 border-white dark:border-zinc-900 z-10">
         {step}

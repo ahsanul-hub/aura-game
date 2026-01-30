@@ -13,13 +13,13 @@ interface ProductComponentProps {
 
 export function ProductComponent({ game, activeProduct, step = 2 }: ProductComponentProps) {
   return (
-    <div className="relative w-[350px] sm:w-150 mt-5 ">
+    <div className="relative w-full sm:w-150  ">
       {/* Step Badge */}
       <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-md border-2 border-white dark:border-zinc-900 z-10">
         {step}
       </div>
 
-      <div className="bg-black/5 dark:bg-white/10 backdrop-blur-lg rounded-3xl p-4 sm:p-6 border border-purple-500/30 hover:border-purple-500 transition-all duration-300 shadow-xl">
+      <div className="bg-black/5 dark:bg-white/10  rounded-3xl p-4 sm:p-6 border border-purple-500/30 hover:border-purple-500 transition-all duration-300 shadow-xl">
         {/* Title */}
         <h2 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white mb-4">
           Pilih Nominal Top Up
@@ -72,7 +72,7 @@ export function ProductComponent({ game, activeProduct, step = 2 }: ProductCompo
                   </div>
 
                   <p className="flex-1 text-xs  font-bold text-purple-600 dark:text-purple-400 text-center">
-                    Rp. {formatPrice(pkg.selling_price)}
+                    Rp {formatPrice(pkg.selling_price)}
                   </p>
                 </div>
               </div>
