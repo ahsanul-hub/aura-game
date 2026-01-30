@@ -1,4 +1,4 @@
-import { GamDetail } from '../../../types/Game'
+import { GameDetail } from '../../../types/Game'
 
 const features = [
   {
@@ -16,7 +16,7 @@ const features = [
 ]
 
 interface GameTransactionProps {
-  game: GamDetail
+  game: GameDetail
 }
 
 export default function BannerGameTransaction({ game }: GameTransactionProps) {

@@ -1,12 +1,60 @@
 'use client'
-import { GameInput } from '../../../types/Game'
+import { useForm } from 'react-hook-form'
+import { useEffect, useRef } from 'react'
+import { GameDetail, GameInput } from '../../../types/Game'
+import { useCheckIDV2 } from '../hooks/useCheckID'
 
 interface AccountCardProps {
   gameData: GameInput[]
   step?: number
+  game: GameDetail
 }
 
-export default function AccountCard({ gameData, step = 1 }: AccountCardProps) {
+export default function AccountCard({ gameData, step = 1, game }: AccountCardProps) {
+  const { mutate, isPending, data } = useCheckIDV2()
+
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useForm<Record<string, string>>({
+    mode: 'onChange',
+  })
+
+  const values = watch()
+
+  const hasCheckedRef = useRef(false)
+  const lastPayloadRef = useRef<string>('')
+
+  useEffect(() => {
+    const requiredFilled = gameData.filter((g) => g.required).every((g) => values[g.key])
+
+    if (!requiredFilled) {
+      hasCheckedRef.current = false
+      return
+    }
+
+    const payloadString = JSON.stringify(values)
+
+    if (payloadString === lastPayloadRef.current) return
+
+    if (hasCheckedRef.current) return
+
+    const t = setTimeout(() => {
+      mutate({
+        category_code: game.code,
+        game_id: game.id,
+        provider_id: game.provider_id,
+        game_data: values,
+      })
+
+      hasCheckedRef.current = true
+      lastPayloadRef.current = payloadString
+    }, 700)
+
+    return () => clearTimeout(t)
+  }, [values, gameData, mutate])
+
   return (
     <div className="relative w-full sm:w-150 ">
       {/* Step Badge */}
@@ -15,12 +63,10 @@ export default function AccountCard({ gameData, step = 1 }: AccountCardProps) {
       </div>
 
       <div className="bg-black/5 dark:bg-white/10 backdrop-blur-lg rounded-3xl p-4 sm:p-6 border border-purple-500/30 hover:border-purple-500 transition-all duration-300 shadow-xl">
-        {/* Title */}
         <h2 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white mb-4">
           Masukkan Data Akun
         </h2>
 
-        {/* Inputs */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
           {gameData
             ?.sort((a, b) => a.sort_order - b.sort_order)
@@ -33,24 +79,8 @@ export default function AccountCard({ gameData, step = 1 }: AccountCardProps) {
 
                 {input.input_type === 'dropdown' ? (
                   <select
-                    name={`game_data.${input.key}`}
-                    className="
-    w-full
-    px-3 sm:px-4
-    py-2.5 sm:py-3
-    rounded-2xl
-    bg-white dark:bg-white/20
-    border border-purple-500/30
-    text-gray-900 dark:text-white
-    text-sm
-    outline-none
-    transition-all duration-200
-
-    hover:border-purple-500
-    focus:border-purple-500
-    focus:ring-2 focus:ring-purple-500/20
-    focus:bg-white dark:focus:bg-white/30
-  "
+                    {...register(input.key, { required: input.required })}
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-white/20 border border-purple-500/30 text-gray-900 dark:text-white text-sm outline-none transition-all duration-200 hover:border-purple-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:bg-white dark:focus:bg-white/30"
                   >
                     <option value="">{input.placeholder}</option>
                     {input.Options?.map((opt) => (
@@ -61,32 +91,35 @@ export default function AccountCard({ gameData, step = 1 }: AccountCardProps) {
                   </select>
                 ) : (
                   <input
+                    {...register(input.key, { required: input.required })}
                     type={input.input_type}
-                    name={`game_data.${input.key}`}
                     placeholder={input.placeholder}
-                    className="
-    w-full
-    px-3 sm:px-4
-    py-2.5 sm:py-3
-    rounded-2xl
-    bg-white dark:bg-white/20
-    border border-purple-500/30
-    text-gray-900 dark:text-white
-    placeholder-gray-400 dark:placeholder-purple-300
-    text-sm
-    outline-none
-    transition-all duration-200
-
-    hover:border-purple-500
-    focus:border-purple-500
-    focus:ring-2 focus:ring-purple-500/20
-    focus:bg-white dark:focus:bg-white/30
-  "
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-white/20 border border-purple-500/30 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-purple-300 text-sm outline-none transition-all duration-200 hover:border-purple-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:bg-white dark:focus:bg-white/30"
                   />
+                )}
+
+                {errors[input.key] && (
+                  <span className="text-red-500 text-xs mt-1">Wajib diisi</span>
                 )}
               </div>
             ))}
         </div>
+
+        {/* 🔥 CHECK ID STATUS */}
+        {(isPending || data?.username) && (
+          <div className="mt-4 flex items-center">
+            {isPending && (
+              <div className="flex items-center gap-2 text-purple-500 text-sm">
+                <div className="w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
+                Mengecek ID akun...
+              </div>
+            )}
+
+            {!isPending && data?.username && (
+              <div className="text-green-500 text-sm font-semibold">✓ Account: {data.username}</div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )

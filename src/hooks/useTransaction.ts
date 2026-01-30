@@ -55,6 +55,7 @@ type CheckIDPayload = {
   provider_id: string
   game_data: Record<string, string>
 }
+
 export function useCheckID() {
   return useMutation({
     mutationFn: async (payload: CheckIDPayload) => {

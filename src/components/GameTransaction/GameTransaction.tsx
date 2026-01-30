@@ -32,7 +32,7 @@ export default function GameTransaction() {
   }
 
   const sections: ReactElement[] = [
-    ...(inputs.length > 0 ? [<AccountComponent key="account" gameData={inputs} />] : []),
+    ...(inputs.length > 0 ? [<AccountComponent game={dataGameDetail.data} key="account" gameData={inputs} />] : []),
 
     <ProductComponent key="product" game={dataGameDetail} activeProduct={activeProduct} />,
     <PaymentMethodTransactionComponent
