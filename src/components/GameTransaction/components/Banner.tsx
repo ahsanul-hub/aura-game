@@ -1,4 +1,4 @@
-import { GamDetail } from '../../types/Game'
+import { GamDetail } from '../../../types/Game'
 
 const features = [
   {

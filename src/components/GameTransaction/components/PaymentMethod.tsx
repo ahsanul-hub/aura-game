@@ -1,7 +1,7 @@
 'use client'
 
 import { CheckCircle2 } from 'lucide-react'
-import { GetPaymentMethodResponse, PaymentMethod } from '../../types/PaymentMethod'
+import { GetPaymentMethodResponse, PaymentMethod } from '../../../types/PaymentMethod'
 import Image from 'next/image'
 
 interface PaymentMethodProps {

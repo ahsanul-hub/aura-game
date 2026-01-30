@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 import { CheckCircle2 } from 'lucide-react'
-import { GetGameResponse, Price } from '../../types/Game'
-import { formatPrice } from '../../utils/format_price'
+import { GetGameResponse, Price } from '../../../types/Game'
+import { formatPrice } from '../../../utils/format_price'
 
 interface ProductComponentProps {
   game: GetGameResponse

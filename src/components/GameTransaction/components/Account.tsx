@@ -1,5 +1,5 @@
 'use client'
-import { GameInput } from '../../types/Game'
+import { GameInput } from '../../../types/Game'
 
 interface AccountCardProps {
   gameData: GameInput[]
