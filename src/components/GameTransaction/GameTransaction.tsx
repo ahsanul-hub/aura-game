@@ -17,15 +17,18 @@ import OrderTransactionComponent from './components/OrderTransaction'
 import HelpCard from './components/Help'
 import MobileOrderBar from './components/MobileOrderTransaction'
 import { useCreateTransactionV2 } from './hooks/useCreateTransaction'
+import { toast } from 'sonner'
+import useAuth from '../../hooks/useAuth'
 
 export default function GameTransaction() {
   const { slug } = useParams<{ slug: string }>()
   const [selectedPackage, setSelectedPackage] = useState<Price | null>(null)
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod>(null)
   const [email, setSelectedEmail] = useState<string>(null)
+  const { user } = useAuth()
   const [account, setSelectedAccount] = useState<Record<string, any> | null>(null)
 
-  const { data: dataPaymentMethods, isLoading: isLoadingPaymentMethods } = useGetPaymentMethod()
+  const { data: dataPaymentMethods } = useGetPaymentMethod()
   const { data: dataGameDetail, isLoading: isLoadingGameDetail } = useGetGamesBySlug(slug)
 
   const { mutate } = useCreateTransactionV2()
@@ -35,14 +38,30 @@ export default function GameTransaction() {
 
   const inputs = dataGameDetail?.data?.input || []
 
+  useEffect(() => {
+    if (user?.email) {
+      setSelectedEmail(user.email)
+    }
+  }, [user])
+
   if (isLoadingGameDetail) {
     return <SpinnerGameTransaction />
   }
 
+  const validations = [
+    ...(inputs.length > 0 ? [{ value: account, message: 'Akun Tidak Ditemukan' }] : []),
+
+    { value: selectedPackage, message: 'Pilih package dulu' },
+    { value: selectedPayment, message: 'Pilih metode pembayaran' },
+    { value: email, message: 'Email belum diisi' },
+  ]
+
   const handleCreateOrder = () => {
-    if (!account || !selectedPackage || !selectedPayment || !email) {
-      alert('Lengkapi data dulu')
-      return
+    for (const v of validations) {
+      if (!v.value) {
+        toast.error(v.message)
+        return
+      }
     }
 
     mutate({
@@ -88,7 +107,7 @@ export default function GameTransaction() {
       PaymentMethod={dataPaymentMethods}
       activePayment={activePayment}
     />,
-    <ContactForm setSelectedEmail={setSelectedEmail} />,
+    <ContactForm setSelectedEmail={setSelectedEmail} email={email} />,
   ]
 
   return (
@@ -103,7 +122,7 @@ export default function GameTransaction() {
             })
           )}
         </div>
-        
+
         <div className="flex items-center flex-col ">
           <HelpCard />
           <OrderTransactionComponent
@@ -113,7 +132,11 @@ export default function GameTransaction() {
           />
         </div>
       </LayoutData>
-      <MobileOrderBar Payment={activePayment} Product={activeProduct} onSubmit={handleCreateOrder} />
+      <MobileOrderBar
+        Payment={activePayment}
+        Product={activeProduct}
+        onSubmit={handleCreateOrder}
+      />
     </LayoutGamesTransaction>
   )
 }

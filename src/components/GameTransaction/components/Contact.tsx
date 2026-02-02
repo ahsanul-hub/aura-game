@@ -4,9 +4,10 @@ import { Mail } from 'lucide-react'
 interface ContactFormProps {
   step?: number
   setSelectedEmail: React.Dispatch<React.SetStateAction<string | null>>
+  email: string
 }
 
-export default function ContactForm({ step, setSelectedEmail }: ContactFormProps) {
+export default function ContactForm({ step, setSelectedEmail, email }: ContactFormProps) {
   return (
     <div className="relative w-full sm:w-150 ">
       {/* Step Badge */}
@@ -41,6 +42,7 @@ export default function ContactForm({ step, setSelectedEmail }: ContactFormProps
         {/* Input */}
         <input
           type="email"
+          value={email ?? ''}
           required
           onChange={(e) => setSelectedEmail(e.target.value)}
           placeholder="contoh@email.com"

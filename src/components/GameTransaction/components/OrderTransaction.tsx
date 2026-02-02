@@ -70,6 +70,8 @@ export default function OrderSummary({ onSubmit, Payment, Product }: OrderProps)
           Beli
         </button>
       </div>
+
+      
     </div>
   )
 }
