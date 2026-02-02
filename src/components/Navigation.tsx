@@ -1,5 +1,4 @@
 'use client'
-import { Link, usePathname } from '../i18n/routing'
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 

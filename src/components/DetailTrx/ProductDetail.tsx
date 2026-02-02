@@ -68,11 +68,12 @@ export default function ProductDetailCard({ data }: ProductDetailCardProps) {
               {data?.detail_product?.email}
             </span>
           </div>
-          {data?.detail_product && (
-            <div className="grid grid-cols-3 gap-2">
-              <span className="text-gray-500">Voucher</span>
-              <span className="col-span-2 font-medium text-green-600 break-all">
-                {data?.detail_product?.voucher_code}
+          {data?.detail_product?.voucher_code?.trim() && (
+            <div className="grid grid-cols-3 items-center gap-2 rounded-lg bg-green-50 px-3 py-2">
+              <span className="text-xs font-medium text-gray-500">Voucher</span>
+
+              <span className="col-span-2 flex items-center gap-2 font-semibold text-green-700 break-all">
+                🎟️ {data.detail_product.voucher_code}
               </span>
             </div>
           )}
