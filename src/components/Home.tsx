@@ -1,7 +1,7 @@
 'use client'
 
 import BannerComponent from './Banner/Banner'
-import GamesByShow from './Game/GamesByShow'
+import GamesByShow from './Home/GamesByShow'
 
 export function Home() {
   return (
