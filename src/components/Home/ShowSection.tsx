@@ -51,7 +51,7 @@ export default function ShowSectionGames({ shows }: ShowSectionProps) {
             </div>
 
             {/* GAMES GRID */}
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols- gap-6">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols- gap-3 sm:gap-4">
               {games.map((game) => (
                 <Link
                   key={game.ID}
@@ -146,7 +146,7 @@ export default function ShowSectionGames({ shows }: ShowSectionProps) {
 
             {/* TOMBOL TAMPILKAN LEBIH BANYAK */}
             {hasManyGames && (
-              <div className="mt-4 flex justify-center">
+              <div className="mt-1 flex justify-center">
                 <button
                   onClick={() =>
                     setExpanded((prev) => ({
