@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useGetBanners } from '../../hooks/useBanner'
@@ -14,29 +14,37 @@ const AUTOPLAY_DELAY = 5000
 
 export default function BannerCarousel() {
   const { data, isLoading, isError } = useGetBanners()
-  const [index, setIndex] = useState(0)
-  const banners: Banner[] = data?.data || []
-
+  const banners: Banner[] = data?.data ?? []
   const total = banners.length
 
-  // Next slide
+  const [index, setIndex] = useState(0)
+  const [isHovering, setIsHovering] = useState(false)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Fix index kalau data berubah
+  useEffect(() => {
+    if (index >= total) setIndex(0)
+  }, [index, total])
+
   const next = useCallback(() => {
-    setIndex((prev) => (prev + 1 >= total ? 0 : prev + 1))
+    setIndex((prev) => (prev + 1) % total)
   }, [total])
 
-  // Previous slide
-  const prev = () => {
-    setIndex((prev) => (prev - 1 < 0 ? total - 1 : prev - 1))
-  }
+  const prev = useCallback(() => {
+    setIndex((prev) => (prev - 1 + total) % total)
+  }, [total])
 
-  // Autoplay
+  // Autoplay (pause on hover)
   useEffect(() => {
-    if (total === 0) return
-    const timer = setInterval(next, AUTOPLAY_DELAY)
-    return () => clearInterval(timer)
-  }, [next, total])
+    if (total === 0 || isHovering) return
 
-  // Loading / Error / Empty state
+    timerRef.current = setInterval(next, AUTOPLAY_DELAY)
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current)
+    }
+  }, [next, total, isHovering])
+
   if (isLoading) return <ShowSkeleton />
   if (isError) return <ErrorBanner />
   if (total === 0) return <EmptyBanner />
@@ -44,58 +52,74 @@ export default function BannerCarousel() {
   return (
     <LayoutBanner>
       <div
-        className="flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-        style={{ transform: `translateX(-${index * 100}%)` }}
+        className="group relative overflow-hidden "
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
       >
-        {banners.map((banner) => (
-          <div
-            key={banner.id}
-            className="w-full flex-shrink-0 relative aspect-[16/9] md:aspect-[21/9]"
-          >
-            <a href={banner.redirect_link} target="_blank">
-              <Image
-                src={banner.image}
-                alt={banner.redirect_link || 'banner'}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 1200px"
-                onError={(e) => {
-                  e.currentTarget.src = '/placeholder.png'
-                }}
-              />
-            </a>
-          </div>
-        ))}
-      </div>
+        {/* SLIDES */}
+        <div
+          className="flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+        >
+          {banners.map((banner, i) => (
+            <div
+              key={banner.id}
+              className="
+    w-full flex-shrink-0 relative
+    h-[140px]
+    sm:h-[220px]
+    md:h-[340px]
+  "
+            >
+              <a
+                href={banner.redirect_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Banner ${i + 1}`}
+              >
+                <Image
+                  src={banner.image || '/placeholder.png'}
+                  alt="Banner"
+                  fill
+                  priority={i === 0}
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 1200px"
+                />
+              </a>
+            </div>
+          ))}
+        </div>
 
-      {/* NAVIGATION ARROWS */}
-      <button
-        onClick={prev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-md text-white p-2 md:p-3 rounded-full transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="w-6 h-6" />
-      </button>
+        {/* NAVIGATION */}
+        <button
+          onClick={prev}
+          aria-label="Previous slide"
+          className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/30 p-2 text-white backdrop-blur transition hover:bg-black/50 opacity-0 group-hover:opacity-100"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
 
-      <button
-        onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-md text-white p-2 md:p-3 rounded-full transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="w-6 h-6" />
-      </button>
+        <button
+          onClick={next}
+          aria-label="Next slide"
+          className="absolute cursor-pointer  right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/30 p-2 text-white backdrop-blur transition hover:bg-black/50 opacity-0 group-hover:opacity-100"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
 
-      {/* PAGINATION DOTS */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-        {banners.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setIndex(i)}
-            className={`h-2 transition-all duration-300 rounded-full ${
-              index === i ? 'w-8 bg-white' : 'w-2 bg-white/50'
-            }`}
-          />
-        ))}
+        {/* DOTS */}
+        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+          {banners.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-2 rounded-full transition-all ${
+                index === i ? 'w-8 bg-white' : 'w-2 bg-white/50'
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </LayoutBanner>
   )
