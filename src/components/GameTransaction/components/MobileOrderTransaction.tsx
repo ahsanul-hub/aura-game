@@ -2,7 +2,7 @@
 import { ShoppingCart } from 'lucide-react'
 import { Price } from '../../../types/Game'
 import { PaymentMethod } from '../../../types/PaymentMethod'
-import { formatPrice } from '../../../utils/format_price'
+import { calculateTotalPrice } from './PaymentMethod'
 
 interface OrderMobileProps {
   handleConfirm: () => void
@@ -11,6 +11,7 @@ interface OrderMobileProps {
 }
 
 export default function MobileOrderBar({ Product, handleConfirm, Payment }: OrderMobileProps) {
+  const totalPrice = calculateTotalPrice(Payment, Product)
   return (
     <div className="xl:hidden fixed bottom-0 left-0 right-0 z-50 ">
       {/* blur background */}
@@ -21,7 +22,7 @@ export default function MobileOrderBar({ Product, handleConfirm, Payment }: Orde
             <div className="flex flex-col">
               <span className="text-xs text-gray-500 dark:text-purple-200">Total</span>
               <span className="text-lg font-bold text-green-500 dark:text-green-400">
-                Rp {formatPrice(Math.round(Product?.selling_price))}
+                Rp {totalPrice}
               </span>
             </div>
             <div className="flex flex-col">

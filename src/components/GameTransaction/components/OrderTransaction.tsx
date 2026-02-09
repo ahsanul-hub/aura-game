@@ -2,7 +2,7 @@
 import { ShoppingCart } from 'lucide-react'
 import { Price } from '../../../types/Game'
 import { PaymentMethod } from '../../../types/PaymentMethod'
-import { formatPrice } from '../../../utils/format_price'
+import { calculateTotalPrice } from './PaymentMethod'
 
 interface OrderProps {
   Product: Price
@@ -11,6 +11,8 @@ interface OrderProps {
 }
 
 export default function OrderSummary({ Payment, Product, handleConfirm }: OrderProps) {
+  const totalPrice = calculateTotalPrice(Payment, Product)
+
   return (
     <div className=" hidden xl:block sticky top-24 mt-5">
       <div className="bg-black/5  xl:w-100  dark:bg-white/10 rounded-3xl p-4 sm:p-6 border border-purple-500/30 shadow-xl">
@@ -37,9 +39,9 @@ export default function OrderSummary({ Payment, Product, handleConfirm }: OrderP
           <div className="flex justify-between pt-2 border-t border-gray-200 dark:border-white/10">
             <span className="font-semibold">Total : </span>
             <span className=" text-xl font-bold text-green-500 dark:text-green-400">
-              {Product?.selling_price && (
+              {totalPrice !== null && (
                 <p className="sm:text-sm font-semibold text-purple-600 dark:text-purple-400">
-                  Rp {formatPrice(Math.round(Product?.selling_price))}
+                  Rp {totalPrice}
                 </p>
               )}
             </span>

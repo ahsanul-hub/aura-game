@@ -25,9 +25,9 @@ export default function BannerGameTransaction({ game }: GameTransactionProps) {
       {/* COVER */}
       <div className="relative h-52 sm:h-60 md:h-90 w-full overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1542751371-adc38448a05e"
+          src={game.banner_url || 'https://images.unsplash.com/photo-1542751371-adc38448a05e'}
           alt="cover"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-contain"
         />
       </div>
 
@@ -66,7 +66,10 @@ export default function BannerGameTransaction({ game }: GameTransactionProps) {
         <div className="mt-10 sm:mt-3 sm:mr-7.5 md:ml-63 lg:w-100 xl:ml-72 lg:ml-68 ">
           <div className="flex flex-row justify-between sm:justify-center sm:gap-3 items-center text-xs sm:text-sm text-gray-600 font-medium ">
             {features.map((item, i) => (
-              <div key={i} className="flex items-center gap-1 sm:mb-2 text-gray-700 dark:text-gray-200 ">
+              <div
+                key={i}
+                className="flex items-center gap-1 sm:mb-2 text-gray-700 dark:text-gray-200 "
+              >
                 <img src={item.icon} alt={item.label} className="w-5 h-5" />
                 <p>{item.label}</p>
               </div>
