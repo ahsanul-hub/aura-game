@@ -14,6 +14,15 @@ interface PaymentMethodProps {
   ActiveProduct: Price
 }
 
+const calculateTotalPrice = (payment: PaymentMethod, ActiveProduct: Price) => {
+  if (!ActiveProduct) return null
+
+  const base = ActiveProduct.selling_price
+  const feePercent = base * (payment.fee_percentage / 100)
+  const total = base + feePercent
+  return formatPrice(Math.round(total))
+}
+
 export default function PaymentMethodTransactionComponent({
   PaymentMethod,
   activePayment,
@@ -38,6 +47,7 @@ export default function PaymentMethodTransactionComponent({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {PaymentMethod?.data?.map((payment) => {
             const isSelected = activePayment?.id === payment.id
+            const totalPrice = calculateTotalPrice(payment, ActiveProduct)
             return (
               <div
                 key={payment.id}
@@ -81,8 +91,8 @@ export default function PaymentMethodTransactionComponent({
                 {/* Price */}
                 <div className="flex w-auto justify-end ">
                   {ActiveProduct?.selling_price && (
-                    <p className="xl:text-xs font-semibold text-purple-600 dark:text-purple-400">
-                      Rp {formatPrice(Math.round(ActiveProduct?.selling_price))}
+                    <p className="text-sm  xl:text-xs font-semibold text-purple-600 dark:text-purple-400">
+                      Rp {totalPrice}
                     </p>
                   )}
                 </div>
