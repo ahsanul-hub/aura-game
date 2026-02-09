@@ -82,7 +82,7 @@ export default function PaymentMethodTransactionComponent({
                 <div className="flex w-auto justify-end ">
                   {ActiveProduct?.selling_price && (
                     <p className="xl:text-xs font-semibold text-purple-600 dark:text-purple-400">
-                      Rp {formatPrice(ActiveProduct.selling_price)}
+                      Rp {formatPrice(Math.round(ActiveProduct?.selling_price))}
                     </p>
                   )}
                 </div>

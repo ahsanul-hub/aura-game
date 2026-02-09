@@ -2,14 +2,15 @@
 import { ShoppingCart } from 'lucide-react'
 import { Price } from '../../../types/Game'
 import { PaymentMethod } from '../../../types/PaymentMethod'
+import { formatPrice } from '../../../utils/format_price'
 
 interface OrderMobileProps {
-  onSubmit: () => void
+  handleConfirm: () => void
   Product: Price
   Payment: PaymentMethod
 }
 
-export default function MobileOrderBar({ Product, onSubmit, Payment }: OrderMobileProps) {
+export default function MobileOrderBar({ Product, handleConfirm, Payment }: OrderMobileProps) {
   return (
     <div className="xl:hidden fixed bottom-0 left-0 right-0 z-50 ">
       {/* blur background */}
@@ -20,10 +21,7 @@ export default function MobileOrderBar({ Product, onSubmit, Payment }: OrderMobi
             <div className="flex flex-col">
               <span className="text-xs text-gray-500 dark:text-purple-200">Total</span>
               <span className="text-lg font-bold text-green-500 dark:text-green-400">
-                {new Intl.NumberFormat('id-ID', {
-                  style: 'currency',
-                  currency: 'IDR',
-                }).format(Product?.selling_price || 0)}
+                Rp {formatPrice(Math.round(Product?.selling_price))}
               </span>
             </div>
             <div className="flex flex-col">
@@ -36,9 +34,11 @@ export default function MobileOrderBar({ Product, onSubmit, Payment }: OrderMobi
 
           {/* Button */}
           <button
-            onClick={onSubmit}
+            onClick={() => {
+              handleConfirm()
+            }}
             className="
-           
+            cursor-pointer
             w-full
               flex-1
                sm:max-w-40

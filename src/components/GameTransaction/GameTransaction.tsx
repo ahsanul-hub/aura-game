@@ -28,17 +28,27 @@ export default function GameTransaction() {
   const [email, setSelectedEmail] = useState<string>(null)
   const { user } = useAuth()
   const [account, setSelectedAccount] = useState<Record<string, any> | null>(null)
-  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [openModalConfirm, setOpenModalConfirm] = useState<boolean>(false)
 
   const { data: dataPaymentMethods } = useGetPaymentMethod()
   const { data: dataGameDetail, isLoading: isLoadingGameDetail } = useGetGamesBySlug(slug)
 
-  const { mutate } = useCreateTransactionV2()
+  const { mutate, isPending } = useCreateTransactionV2()
 
   const activeProduct = selectedPackage ?? null
   const activePayment = selectedPayment ?? null
 
   const inputs = dataGameDetail?.data?.input || []
+
+  const safeValues = account ?? {}
+
+  const hasInputAccount = Object.values(safeValues).some(Boolean)
+  const isAccountValid = !!account
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  const hasEmail = !!email
+  const isEmailValid = hasEmail && emailRegex.test(email)
 
   useEffect(() => {
     if (user?.email) {
@@ -51,21 +61,29 @@ export default function GameTransaction() {
   }
 
   const validations = [
-    ...(inputs.length > 0 ? [{ value: account, message: 'Akun Tidak Ditemukan' }] : []),
-
+    ...(inputs.length > 0
+      ? [
+          { value: hasInputAccount, message: 'Masukkan akun' },
+          { value: isAccountValid, message: 'Akun tidak ditemukan' },
+        ]
+      : []),
     { value: selectedPackage, message: 'Pilih Produk' },
     { value: selectedPayment, message: 'Pilih metode pembayaran' },
-    { value: email, message: 'Email belum diisi' },
+    { value: hasEmail, message: 'Email belum diisi' },
+    { value: isEmailValid, message: 'Format email tidak valid' },
   ]
 
-  const handleCreateOrder = () => {
+  const handleOpenConfirm = () => {
     for (const v of validations) {
       if (!v.value) {
         toast.error(v.message)
         return
       }
     }
+    setOpenModalConfirm(true)
+  }
 
+  const handleCreateOrder = () => {
     mutate({
       game_id: dataGameDetail.data.id,
       package: {
@@ -128,18 +146,25 @@ export default function GameTransaction() {
         <div className="flex items-center flex-col ">
           <HelpCard />
           <OrderTransactionComponent
+            handleConfirm={handleOpenConfirm}
             Payment={activePayment}
             Product={activeProduct}
-            setOpenModal={setOpenModal}
           />
         </div>
       </LayoutData>
       <MobileOrderBar
         Payment={activePayment}
         Product={activeProduct}
-        onSubmit={handleCreateOrder}
+        handleConfirm={handleOpenConfirm}
       />
-      <ConfirmModal onConfirm={handleCreateOrder} />
+      <ConfirmModal
+        open={openModalConfirm}
+        setOpen={setOpenModalConfirm}
+        Payment={activePayment}
+        Product={activeProduct}
+        onConfirm={handleCreateOrder}
+        loading={isPending}
+      />
     </LayoutGamesTransaction>
   )
 }

@@ -42,6 +42,10 @@ export default function AccountCard({
   }, [data])
 
   useEffect(() => {
+    hasCheckedRef.current = false
+  }, [values])
+
+  useEffect(() => {
     const requiredFilled = gameData.filter((g) => g.required).every((g) => values[g.key])
 
     if (!requiredFilled) {
@@ -65,7 +69,7 @@ export default function AccountCard({
 
       hasCheckedRef.current = true
       lastPayloadRef.current = payloadString
-    }, 700)
+    }, 500)
 
     return () => clearTimeout(t)
   }, [data, values, game.id, setAccount, account])

@@ -79,7 +79,7 @@ export function ProductComponent({
                   </div>
 
                   <p className="flex-1 text-xs  font-bold text-purple-600 dark:text-purple-400 text-center">
-                    Rp {formatPrice(pkg?.selling_price)}
+                    Rp {formatPrice(Math.round(pkg?.selling_price))}
                   </p>
                 </div>
               </div>
